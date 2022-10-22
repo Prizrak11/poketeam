@@ -1,0 +1,17 @@
+:root {
+  --background-color: #130E0C;
+  --font-color: #eeeeee;
+  --display-font: 'Press Start 2P', cursive
+}
+
+:root {
+  font-family: var(--display-font);
+  background-color: var(--background-color);
+  color: var(--font-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
