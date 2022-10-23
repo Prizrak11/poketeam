@@ -45,4 +45,26 @@
       display: flex;
     }
   }
+
+  &.void {
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+
+    .background {
+      filter: opacity(0.2) blur(1em);
+    }
+
+    svg {
+      color: white;
+      filter: opacity(0.6);
+      font-size: 4em;
+    }
+
+    &:hover {
+      .background {
+        filter: opacity(0.4);
+      }
+    }
+  }
 }
