@@ -1,0 +1,13 @@
+@import "../../variables.css";
+
+.badge {
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  position: relative;
+  clip-path: var(--pixel-corners-sm);
+
+  span {
+    filter: brightness(0.2);
+  }
+}
