@@ -1,0 +1,37 @@
+@import "../../variables.css";
+
+.search {
+  width: fit-content;
+
+  .input {
+    padding: 0.7rem 1rem;
+    border: none;
+    outline: none;
+    width: 150%;
+  }
+
+  .suggestions {
+    color: var(--background-color);
+    background-color: white;
+    width: 150%;
+    max-height: 20rem;
+    overflow-y: scroll;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      padding: 0.7rem 1rem;
+      text-transform: capitalize;
+      background: none;
+      border: none;
+      text-align: start;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        font-weight: 700;
+      }
+    }
+  }
+}

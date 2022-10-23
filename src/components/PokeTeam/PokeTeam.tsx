@@ -2,21 +2,25 @@ import { FC } from 'react'
 import usePokemon from 'hooks/usePokemons'
 import PokeCard from '../PokeCard/PokeCard'
 import styles from './PokeTeam.module.css'
+import PokeSearch from 'components/PokeSearch/PokeSearch'
 
 const PokeTeam: FC = (): JSX.Element => {
-  const { pokemon, loading, error } = usePokemon()
+  const { pokemonTeam, loading, error, addPokemonToTeam } = usePokemon()
 
   if (loading) return <span>Loading</span>
-  if (error || (pokemon == null)) return <span>Error</span>
+  if (error) return <span>Error</span>
   return (
-    <section className={styles.team}>
-      <PokeCard pokemon={pokemon} />
-      <PokeCard pokemon={pokemon} />
-      <PokeCard pokemon={pokemon} />
-      <PokeCard pokemon={pokemon} />
-      <PokeCard pokemon={pokemon} />
-      <PokeCard pokemon={pokemon} />
-    </section>
+    <div>
+      <PokeSearch onPokemonClick={addPokemonToTeam} />
+      <section className={styles.team}>
+        {
+        pokemonTeam.map(pokemon => {
+          if (pokemon === undefined) return 'Not selected'
+          return <PokeCard key={pokemon.number} pokemon={pokemon} />
+        })
+      }
+      </section>
+    </div>
   )
 }
 
