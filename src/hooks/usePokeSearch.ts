@@ -19,11 +19,15 @@ const usePokeSearch = ({ filters }: pokeSearchProps = {}): IusePokeSearch => {
   const [pokemonSearch, setPokemonSearch] = useState<pokemonSearchType[]>()
   const [pokemonList, setPokemonList] = useState<pokemonSearchType[]>()
 
-  useEffect(() => {
+  const getListFromApi = (): void => {
     setIsLoading(true)
     pokemonSearchList()
       .then(setPokemonSearch)
       .finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    getListFromApi()
   }, [])
 
   const handleChange = (query: string): void => {
