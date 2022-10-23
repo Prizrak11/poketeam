@@ -1,0 +1,48 @@
+@import "../../variables.css";
+
+.card {
+  color: black;
+  display: flex;
+  align-items: center;
+  column-gap: 1em;
+  padding: 1rem;
+  padding-left: 0;
+  display: flex;
+  height: 7rem;
+  width: auto;
+  position: relative;
+  overflow: visible;
+
+  .background {
+    filter: opacity(0.8) blur(1em);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    clip-path: var(--pixel-corners-md);
+    box-shadow: inset 0px 0px 5px -3px white;
+  }
+
+  img {
+    height: 150%;
+    margin-top: -20%;
+    object-fit: contain;
+    z-index: 10;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+
+    h1 {
+      text-transform: capitalize;
+    }
+
+    .types {
+      column-gap: 0.5rem;
+      display: flex;
+    }
+  }
+}
