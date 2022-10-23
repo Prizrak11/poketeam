@@ -1,8 +1,5 @@
-:root {
-  --background-color: #130E0C;
-  --font-color: #eeeeee;
-  --display-font: 'Press Start 2P', cursive
-}
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import "./variables.css";
 
 :root {
   font-family: var(--display-font);

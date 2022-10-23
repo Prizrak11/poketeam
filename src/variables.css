@@ -1,0 +1,7 @@
+:root {
+  --background-color: #110f0d;
+  --font-color: #eeeeee;
+  --display-font: 'Press Start 2P', cursive;
+  --pixel-corners-sm: polygon(0px 5px, 5px 5px, 5px 0px, calc(100% - 5px) 0px, calc(100% - 5px) 5px, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 5px calc(100% - 5px), 0px calc(100% - 5px));
+  --pixel-corners-md: polygon(0px 15px, 5px 15px, 5px 5px, 10px 5px, 15px 5px, 15px 0px, calc(100% - 15px) 0px, calc(100% - 15px) 5px, calc(100% - 5px) 5px, calc(100% - 5px) 10px, calc(100% - 5px) 15px, 100% 15px, 100% calc(100% - 15px), calc(100% - 5px) calc(100% - 15px), calc(100% - 5px) calc(100% - 5px), calc(100% - 10px) calc(100% - 5px), calc(100% - 15px) calc(100% - 5px), calc(100% - 15px) 100%, 15px 100%, 15px calc(100% - 5px), 5px calc(100% - 5px), 5px calc(100% - 10px), 5px calc(100% - 15px), 0px calc(100% - 15px));
+}
