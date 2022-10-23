@@ -4,14 +4,12 @@
   color: black;
   display: flex;
   align-items: center;
-  column-gap: 1em;
-  padding: 1rem;
-  padding-left: 0;
   display: flex;
-  height: 7rem;
+  height: 5rem;
   width: auto;
   position: relative;
   overflow: visible;
+  font-size: 0.7rem;
 
   .background {
     filter: opacity(0.8) blur(1em);
@@ -25,8 +23,10 @@
   }
 
   img {
-    height: 150%;
-    margin-top: -20%;
+    margin-left: 0.5rem;
+    padding-bottom: 1rem;
+    height: 170%;
+    margin-top: -5%;
     object-fit: contain;
     z-index: 10;
   }

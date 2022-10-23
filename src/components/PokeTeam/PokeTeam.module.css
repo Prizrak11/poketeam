@@ -1,0 +1,13 @@
+@import "../../index.css";
+
+.team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  justify-self: center;
+  column-gap: 2rem;
+
+  & > div:nth-child(even) {
+    margin-top: 2rem;
+  }
+}

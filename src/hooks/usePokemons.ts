@@ -15,7 +15,7 @@ const usePokemon = (): usePokemonRes => {
 
   useEffect(() => {
     setLoading(true)
-    getPokemon('lunala')
+    getPokemon('gengar')
       .then(setPokemon)
       .catch(setError)
       .finally(() => { setLoading(false) })

@@ -1,5 +1,6 @@
 .main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 7fr 5fr;
   padding: 1rem;
+  padding-block: 3rem;
 }
