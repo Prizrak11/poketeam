@@ -1,3 +1,22 @@
+import NormalIcon from '../static/Normal_Type_Icon.svg'
+import BugIcon from '../static/Bug_Type_Icon.svg'
+import DarkIcon from '../static/Dark_Type_Icon.svg'
+import DragonIcon from '../static/Dragon_Type_Icon.svg'
+import ElectricIcon from '../static/Electric_Type_Icon.svg'
+import FaityIcon from '../static/Fairy_Type_Icon.svg'
+import FightIcon from '../static/Fighting_Type_Icon.svg'
+import FireIcon from '../static/Fire_Type_Icon.svg'
+import FlyingIcon from '../static/Flying_Type_Icon.svg'
+import GhostIcon from '../static/Ghost_Type_Icon.svg'
+import GrassIcon from '../static/Grass_Type_Icon.svg'
+import GroundIcon from '../static/Ground_Type_Icon.svg'
+import IceIcon from '../static/Ice_Type_Icon.svg'
+import PoisonIcon from '../static/Poison_Type_Icon.svg'
+import PsychicIcon from '../static/Psychic_Type_Icon.svg'
+import RockIcon from '../static/Rock_Type_Icon.svg'
+import SteelIcon from '../static/Steel_Type_Icon.svg'
+import WaterIcon from '../static/Water_Type_Icon.svg'
+
 export enum pokemonTypesNames {
   NORMAL = 'normal',
   FIGHTING = 'fighting',
@@ -16,9 +35,7 @@ export enum pokemonTypesNames {
   ICE = 'ice',
   DRAGON = 'dragon',
   DARK = 'dark',
-  FAIRY = 'fairy',
-  UNKNOWN = 'unknown',
-  SHADOW = 'shadow'
+  FAIRY = 'fairy'
 }
 
 interface IpokemonTypes {
@@ -27,28 +44,27 @@ interface IpokemonTypes {
   ) => {
     name: string
     color: string
+    icon: string
   }
 }
 
 export const pokemonTypes = new Map([
-  [pokemonTypesNames.NORMAL, { name: 'Normal', color: '#9EAFA2' }],
-  [pokemonTypesNames.FIGHTING, { name: 'Fighting', color: '#fc6464' }],
-  [pokemonTypesNames.FLYING, { name: 'Flying', color: '#b0acff' }],
-  [pokemonTypesNames.POISON, { name: 'Poison', color: '#d182ff' }],
-  [pokemonTypesNames.GROUND, { name: 'Ground', color: '#cc8f72' }],
-  [pokemonTypesNames.ROCK, { name: 'Rock', color: '#ccb372' }],
-  [pokemonTypesNames.BUG, { name: 'Bug', color: '#8fcc72' }],
-  [pokemonTypesNames.GHOST, { name: 'Ghost', color: '#9272cc' }],
-  [pokemonTypesNames.STEEL, { name: 'Steel', color: '#E4E7D4' }],
-  [pokemonTypesNames.FIRE, { name: 'Fire', color: '#FFBB67' }],
-  [pokemonTypesNames.WATER, { name: 'Water', color: '#AFCBFF' }],
-  [pokemonTypesNames.GRASS, { name: 'Grass', color: '#86f3a1' }],
-  [pokemonTypesNames.ELECTRIC, { name: 'Electric', color: '#FFDF82' }],
-  [pokemonTypesNames.PSYCHIC, { name: 'Psychic', color: '#cc72b4' }],
-  [pokemonTypesNames.ICE, { name: 'Ice', color: '#91cec9' }],
-  [pokemonTypesNames.DRAGON, { name: 'Dragon', color: '#907eca' }],
-  [pokemonTypesNames.DARK, { name: 'Dark', color: '#46434f' }],
-  [pokemonTypesNames.FAIRY, { name: 'Fairy', color: '#e0a0ea' }],
-  [pokemonTypesNames.UNKNOWN, { name: 'Unknown', color: '#9EAFA2' }],
-  [pokemonTypesNames.SHADOW, { name: 'Shadow', color: '#2b2121' }]
+  [pokemonTypesNames.NORMAL, { name: 'Normal', color: '#818993', icon: NormalIcon }],
+  [pokemonTypesNames.FIGHTING, { name: 'Fighting', color: '#D51558', icon: FightIcon }],
+  [pokemonTypesNames.FLYING, { name: 'Flying', color: '#789ADD', icon: FlyingIcon }],
+  [pokemonTypesNames.POISON, { name: 'Poison', color: '#A64CC5', icon: PoisonIcon }],
+  [pokemonTypesNames.GROUND, { name: 'Ground', color: '#E15C27', icon: GroundIcon }],
+  [pokemonTypesNames.ROCK, { name: 'Rock', color: '#BDA975', icon: RockIcon }],
+  [pokemonTypesNames.BUG, { name: 'Bug', color: '#74BC04', icon: BugIcon }],
+  [pokemonTypesNames.GHOST, { name: 'Ghost', color: '#38509D', icon: GhostIcon }],
+  [pokemonTypesNames.STEEL, { name: 'Steel', color: '#4A7C92', icon: SteelIcon }],
+  [pokemonTypesNames.FIRE, { name: 'Fire', color: '#FC8531', icon: FireIcon }],
+  [pokemonTypesNames.WATER, { name: 'Water', color: '#2A7FD5', icon: WaterIcon }],
+  [pokemonTypesNames.GRASS, { name: 'Grass', color: '#2EB939', icon: GrassIcon }],
+  [pokemonTypesNames.ELECTRIC, { name: 'Electric', color: '#F9CB09', icon: ElectricIcon }],
+  [pokemonTypesNames.PSYCHIC, { name: 'Psychic', color: '#FC4C63', icon: PsychicIcon }],
+  [pokemonTypesNames.ICE, { name: 'Ice', color: '#40CAB4', icon: IceIcon }],
+  [pokemonTypesNames.DRAGON, { name: 'Dragon', color: '#0B58BF', icon: DragonIcon }],
+  [pokemonTypesNames.DARK, { name: 'Dark', color: '#484054', icon: DarkIcon }],
+  [pokemonTypesNames.FAIRY, { name: 'Fairy', color: '#F76EE7', icon: FaityIcon }]
 ]) as IpokemonTypes

@@ -3,11 +3,50 @@
 .badge {
   text-transform: uppercase;
   font-size: 0.6rem;
-  padding: 0.3rem 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  clip-path: var(--pixel-corners-sm);
+  width: 1.5rem;
 
-  span {
-    filter: brightness(0.2);
+  .background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    clip-path: var(--pixel-corners-sm);
+  }
+
+  .icon {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .strength,
+  .weak {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    color: black;
+    padding: 0.5em;
+    font-size: 0.8em;
+    border-radius: 1em;
+    position: absolute;
+  }
+
+  .strength {
+    bottom: 60%;
+    left: 85%;
+  }
+
+  .weak {
+    top: 60%;
+    right: 85%;
   }
 }

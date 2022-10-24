@@ -6,7 +6,7 @@
   color: black;
 
   .background {
-    filter: opacity(0.8) blur(1em);
+    filter: opacity(0.8) blur(1em) contrast(70%) brightness(110%);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -43,7 +43,7 @@
   overflow: visible;
   font-size: 0.7rem;
 
-  img {
+  .sprite {
     margin-left: 0.5rem;
     padding-bottom: 1rem;
     height: 150%;
@@ -62,7 +62,8 @@
     }
 
     .types {
-      column-gap: 0.5rem;
+      column-gap: 2em;
+      padding-inline: 0.5em;
       display: flex;
     }
   }
@@ -91,32 +92,50 @@
 }
 
 .fullCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-block: 1em;
-  row-gap: 1em;
-
-  img {
-    width: 40%;
-    object-fit: contain;
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-block: 2em;
+    row-gap: 1em;
+    justify-items: center;
   }
 
-  .content {
+  .info {
     display: flex;
+    align-items: center;
     flex-direction: column;
     row-gap: 1em;
-    align-items: center;
 
-    h1 {
-      text-align: center;
-      text-transform: capitalize;
-      color: brown;
+    .sprite {
+      width: 50%;
+      object-fit: contain;
     }
 
-    .types {
-      column-gap: 0.5rem;
+    .content {
       display: flex;
+      flex-direction: column;
+      row-gap: 1em;
+      align-items: center;
+
+      h1 {
+        text-align: center;
+        text-transform: capitalize;
+        color: brown;
+      }
+
+      .types {
+        column-gap: 0.5rem;
+        display: flex;
+      }
     }
+  }
+
+  .weakness {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    height: fit-content;
+    column-gap: 4rem;
+    row-gap: 1rem;
   }
 }
