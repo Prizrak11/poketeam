@@ -3,7 +3,17 @@ export interface PokemonAPI {
   name: string
   types: Array<{ slot: number, type: { name: pokemonTypesNames, url: string } }>
   order: number
-  sprites: { front_default: string, other: { home: { front_default: string } } }
+  sprites: {
+    front_default: string
+    other: { home: { front_default: string } }
+    versions: {
+      ['generation-v']: {
+        ['black-white']: {
+          animated: { front_default: string }
+        }
+      }
+    }
+  }
 }
 
 export interface Pokemon {
@@ -24,7 +34,10 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
   formattedPokemon.name = pokemon.name
   formattedPokemon.types = pokemon.types.map(({ type }) => type.name)
   formattedPokemon.number = pokemon.order
-  formattedPokemon.sprite = pokemon.sprites.other.home.front_default ?? pokemon.sprites.front_default
+  formattedPokemon.sprite =
+    pokemon.sprites.versions['generation-v']['black-white'].animated.front_default ??
+    pokemon.sprites.other.home.front_default ??
+    pokemon.sprites.front_default
 
   return formattedPokemon
 }
