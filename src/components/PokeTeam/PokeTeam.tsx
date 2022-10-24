@@ -6,13 +6,12 @@ import VoidCard from 'components/PokeCard/VoidCard'
 import useSearchModal from 'hooks/useSearchModal'
 
 const PokeTeam: FC = (): JSX.Element => {
-  const { pokemonTeam, loading, error, addPokemonToTeam } = usePokemon()
+  const { pokemonTeam, loading, addPokemonToTeam } = usePokemon()
   const { openModal } = useSearchModal()
 
   const openModalToTeam = (): void => openModal(addPokemonToTeam)
 
   if (loading) return <span>Loading</span>
-  if (error) return <span>Error</span>
   return (
     <div>
       <section className={styles.team}>
