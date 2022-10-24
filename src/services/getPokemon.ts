@@ -1,4 +1,4 @@
-import { TypeRelations } from './../types/types'
+import { TypeRelations, unifyTypeRelations } from 'types/types'
 import { Abilitie } from './../types/abilities'
 import { transformApiToPokemon, Pokemon, PokemonAPI } from 'types/pokemon'
 import { POKE_API } from '../consts'
@@ -21,7 +21,7 @@ export const getPokemon = async (name: string): Promise<Pokemon> => {
         const sanitized = transformApiToPokemon(pokemon)
 
         sanitized.abilities = await getAbilities(pokemon)
-        sanitized.typesRelations = await getRelations(pokemon)
+        sanitized.weaknessByType = unifyTypeRelations(await getRelations(pokemon))
         resolve(sanitized)
       })
       .catch(reject)

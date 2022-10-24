@@ -1,4 +1,4 @@
-import { TypeRelations } from './types'
+import { initialWeaknewssByTpe, TypeRelations, weaknessByType } from './types'
 import { Abilitie } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
 
@@ -31,6 +31,7 @@ export interface Pokemon {
   sprite: string
   abilities: Abilitie[]
   typesRelations: TypeRelations[]
+  weaknessByType: weaknessByType
 }
 
 export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
@@ -40,7 +41,8 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
     number: 9999999,
     sprite: '',
     abilities: [],
-    typesRelations: []
+    typesRelations: [],
+    weaknessByType: structuredClone(initialWeaknewssByTpe)
   }
 
   formattedPokemon.name = pokemon.name
