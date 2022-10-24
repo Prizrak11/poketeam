@@ -1,8 +1,15 @@
+import { Abilitie } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
+
 export interface PokemonAPI {
   name: string
   types: Array<{ slot: number, type: { name: pokemonTypesNames, url: string } }>
   order: number
+  abilities: [
+    {
+      ability: { name: string, url: string }
+    }
+  ]
   sprites: {
     front_default: string
     other: { home: { front_default: string } }
@@ -21,14 +28,16 @@ export interface Pokemon {
   types: pokemonTypesNames[]
   number: number
   sprite: string
+  abilities: Abilitie[]
 }
 
 export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
-  const formattedPokemon = {
+  const formattedPokemon: Pokemon = {
     name: 'unknown',
     types: [pokemonTypesNames.UNKNOWN],
     number: 9999999,
-    sprite: ''
+    sprite: '',
+    abilities: []
   }
 
   formattedPokemon.name = pokemon.name
