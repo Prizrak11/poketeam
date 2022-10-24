@@ -2,5 +2,6 @@
   display: grid;
   grid-template-columns: 7fr 5fr;
   padding: 1rem;
+  column-gap: 1rem;
   padding-block: 3rem;
 }

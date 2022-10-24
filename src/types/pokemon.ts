@@ -35,8 +35,8 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
   formattedPokemon.types = pokemon.types.map(({ type }) => type.name)
   formattedPokemon.number = pokemon.order
   formattedPokemon.sprite =
-    pokemon.sprites.versions['generation-v']['black-white'].animated.front_default ??
     pokemon.sprites.other.home.front_default ??
+    pokemon.sprites.versions['generation-v']['black-white'].animated.front_default ??
     pokemon.sprites.front_default
 
   return formattedPokemon

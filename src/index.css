@@ -3,7 +3,7 @@
 
 :root {
   font-family: var(--display-font);
-  background-color: var(--background-color);
+  background-image: radial-gradient(circle, #161311, #151210, #14110f, #12100e, #110f0d);
   color: var(--font-color);
 }
 
