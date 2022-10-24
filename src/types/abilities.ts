@@ -22,7 +22,6 @@ export const transformApiToAbilitie = (abilitie: AbilitieAPI): Abilitie => {
   }
 
   sanitized.name = abilitie.name
-  console.log('filtered', abilitie.effect_entries.find((entrie) => entrie.language.name === 'en'))
   sanitized.shortEffect = abilitie.effect_entries.find((entrie) => entrie.language.name === 'en')?.short_effect ?? abilitie.name
 
   return sanitized

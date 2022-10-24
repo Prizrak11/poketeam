@@ -1,3 +1,4 @@
+import { TypeRelations } from './types'
 import { Abilitie } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
 
@@ -29,6 +30,7 @@ export interface Pokemon {
   number: number
   sprite: string
   abilities: Abilitie[]
+  typesRelations: TypeRelations[]
 }
 
 export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
@@ -37,7 +39,8 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
     types: [pokemonTypesNames.UNKNOWN],
     number: 9999999,
     sprite: '',
-    abilities: []
+    abilities: [],
+    typesRelations: []
   }
 
   formattedPokemon.name = pokemon.name
