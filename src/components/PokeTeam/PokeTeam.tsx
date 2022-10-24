@@ -15,6 +15,7 @@ const PokeTeam: FC = (): JSX.Element => {
   if (loading) return <Spinner />
   return (
     <div>
+      <h1 className={styles.title}>Your Team</h1>
       <section className={styles.team}>
         {
         pokemonTeam.map((pokemon, id) => {

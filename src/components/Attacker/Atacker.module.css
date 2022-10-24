@@ -1,0 +1,7 @@
+@import "../../mixins/title.module.css";
+
+.title {
+  text-align: end;
+
+  @mixin title;
+}

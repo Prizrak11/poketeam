@@ -1,4 +1,9 @@
 @import "../../index.css";
+@import "../../mixins/title.module.css";
+
+.title {
+  @mixin title;
+}
 
 .team {
   display: grid;
