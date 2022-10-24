@@ -2,6 +2,7 @@ import { ChangeEvent, FC, KeyboardEventHandler, useState, useRef } from 'react'
 import usePokeSearch from 'hooks/usePokeSearch'
 import { pokemonSearchType } from 'services/pokemonSearchList'
 import styles from './PokeSearch.module.css'
+import Spinner from 'components/Spinner/Spinner'
 
 export type pokeSearchFunc = (pokemon: pokemonSearchType) => void
 
@@ -27,7 +28,7 @@ const PokeSearch: FC<pokeSearchProps> = ({ onPokemonClick, filters }): JSX.Eleme
     if (keyFocus !== 0) buttonArr.current.at(keyFocus - 1)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
-  if (isLoading) return <span>Loading</span>
+  if (isLoading) return <Spinner />
   return (
     <div className={styles.search}>
       <input type='text' onChange={handleChange} placeholder='Search a pokemon' className={styles.input} autoFocus onKeyUp={handleArrows} />

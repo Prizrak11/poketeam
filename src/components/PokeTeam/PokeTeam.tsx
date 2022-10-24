@@ -4,6 +4,7 @@ import PokeCard from '../PokeCard/PokeCard'
 import styles from './PokeTeam.module.css'
 import VoidCard from 'components/PokeCard/VoidCard'
 import useSearchModal from 'hooks/useSearchModal'
+import Spinner from 'components/Spinner/Spinner'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
@@ -11,7 +12,7 @@ const PokeTeam: FC = (): JSX.Element => {
 
   const openModalToTeam = (): void => openModal(addPokemonToTeamFromApi)
 
-  if (loading) return <span>Loading</span>
+  if (loading) return <Spinner />
   return (
     <div>
       <section className={styles.team}>
