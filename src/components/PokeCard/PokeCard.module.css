@@ -22,6 +22,23 @@
     box-shadow: inset 0px 0px 5px -3px white;
   }
 
+  .removeBtn {
+    position: absolute;
+    background-color: red;
+    filter: opacity(0);
+    padding: 0.5rem;
+    right: -1em;
+    top: -1em;
+    transition: all ease-in-out 0.2s;
+  }
+
+  &:hover .removeBtn {
+    cursor: pointer;
+    filter: brightness(50%) opacity(85%);
+    right: 0;
+    top: 0;
+  }
+
   img {
     margin-left: 0.5rem;
     padding-bottom: 1rem;

@@ -8,7 +8,8 @@ import { Actions } from 'context/reducer'
 interface usePokemonRes {
   pokemonTeam: Pokemon[]
   loading: boolean
-  addPokemonToTeam: (pokemon: pokemonSearchType) => void
+  addPokemonToTeamFromApi: (pokemon: pokemonSearchType) => void
+  removePokemonFromTeam: (pokemon: Pokemon) => void
 }
 
 const usePokemon = (): usePokemonRes => {
@@ -24,16 +25,22 @@ const usePokemon = (): usePokemonRes => {
 
   const teamWithBlankSpaces: Pokemon[] = [...pokemonTeam, ...Array(6 - pokemonTeam.length)]
 
-  const addPokemonToTeam = (pokemon: pokemonSearchType): void => {
+  const addPokemonToTeamFromApi = (pokemon: pokemonSearchType): void => {
     getPokemonFromApi(pokemon.name)
       .then(pokemon => dispatch({ type: Actions.SET_POKEMON, payload: pokemon }))
       .catch((error: Error) => { throw new Error(`Failed to load pokemon ${pokemon.name}: ${error.message}`) })
   }
 
+  const removePokemonFromTeam = (pokemon: Pokemon): void => {
+    const filtered = pokemonTeam.filter(({ number }) => number !== pokemon.number)
+    dispatch({ type: Actions.CHANGE_POKEMON_TEAM, payload: filtered })
+  }
+
   return {
     pokemonTeam: teamWithBlankSpaces,
     loading,
-    addPokemonToTeam
+    addPokemonToTeamFromApi,
+    removePokemonFromTeam
   }
 }
 

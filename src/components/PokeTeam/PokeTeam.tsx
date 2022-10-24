@@ -6,10 +6,10 @@ import VoidCard from 'components/PokeCard/VoidCard'
 import useSearchModal from 'hooks/useSearchModal'
 
 const PokeTeam: FC = (): JSX.Element => {
-  const { pokemonTeam, loading, addPokemonToTeam } = usePokemon()
+  const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
   const { openModal } = useSearchModal()
 
-  const openModalToTeam = (): void => openModal(addPokemonToTeam)
+  const openModalToTeam = (): void => openModal(addPokemonToTeamFromApi)
 
   if (loading) return <span>Loading</span>
   return (
@@ -18,7 +18,7 @@ const PokeTeam: FC = (): JSX.Element => {
         {
         pokemonTeam.map((pokemon, id) => {
           if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
-          return <PokeCard key={pokemon.number} pokemon={pokemon} />
+          return <PokeCard key={pokemon.number} pokemon={pokemon} remove={removePokemonFromTeam} />
         })
       }
       </section>

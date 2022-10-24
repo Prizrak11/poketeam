@@ -8,6 +8,7 @@ export interface AppState {
 
 export enum Actions {
   SET_POKEMON = 'set-pokemon',
+  CHANGE_POKEMON_TEAM = 'change-pokemon-team',
   HANDLE_SEARCH_MODAL = 'handle-search-modal'
 }
 
@@ -27,6 +28,8 @@ export const reducer = (state: AppState, action: ActionType): AppState => {
   switch (type) {
     case Actions.SET_POKEMON:
       return { ...state, pokemonTeam: [...state.pokemonTeam, payload] }
+    case Actions.CHANGE_POKEMON_TEAM:
+      return { ...state, pokemonTeam: payload }
     case Actions.HANDLE_SEARCH_MODAL:
       return { ...state, searchModal: payload }
     default: return state
