@@ -6,6 +6,7 @@ import useAttacker from 'hooks/useAttacker'
 import Spinner from 'components/Spinner/Spinner'
 import { Pokemon } from 'types/pokemon'
 import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
+import ReactToolTip from 'react-tooltip'
 
 type PokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
 
@@ -25,6 +26,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
   return (
     <PokeCardContainer {...props} className={styles.card}>
       <>
+        <ReactToolTip className={styles.tooltip} />
         <p className={styles.number} style={{ color: typeColor }}>{pokemon.number}</p>
         <img src={pokemon.sprite} className={styles.sprite} />
         <section className={styles.content}>

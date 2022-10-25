@@ -20,7 +20,7 @@ const PokeTeam: FC = (): JSX.Element => {
         {
         pokemonTeam.map((pokemon, id) => {
           if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
-          return <PokeCard key={pokemon.number} pokemon={pokemon} remove={removePokemonFromTeam} />
+          return <PokeCard key={id} pokemon={pokemon} remove={removePokemonFromTeam} />
         })
       }
       </section>
