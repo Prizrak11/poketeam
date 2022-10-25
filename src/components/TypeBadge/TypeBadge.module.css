@@ -1,5 +1,6 @@
 @import "../../variables.css";
 
+
 .badge {
   text-transform: uppercase;
   font-size: 0.6rem;
@@ -8,6 +9,10 @@
   align-items: center;
   position: relative;
   width: 1.5rem;
+  
+  .tooltip {
+    font-size: 0.5rem;
+  }
 
   .background {
     width: 100%;

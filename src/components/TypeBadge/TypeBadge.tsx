@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
 import styles from './TypeBadge.module.css'
+import ReactToolTip from 'react-tooltip'
 
 interface BadgeProps {
   type: pokemonTypesNames
@@ -9,8 +10,6 @@ interface BadgeProps {
 
 const TypeBadge: FC<BadgeProps> = ({ type, weak }): JSX.Element => {
   const { color, name, icon } = pokemonTypes.get(type)
-
-  console.log(icon)
 
   const effectiveNessColor: { [key: number]: string[] } = {
     4: ['#1A8828', '#bf4040'],
@@ -35,6 +34,7 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak }): JSX.Element => {
 
   return (
     <div style={{ color }} className={styles.badge}>
+      <ReactToolTip className={styles.tooltip} />
       <div style={{ backgroundColor: color }} className={styles.background} />
       <img src={icon} alt={name} className={styles.icon} />
       {
