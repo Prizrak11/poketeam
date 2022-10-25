@@ -43,6 +43,16 @@
   overflow: visible;
   font-size: 0.7rem;
 
+  .number {
+    position: absolute;
+    z-index: -1;
+    font-family: system-ui;
+    font-weight: 700;
+    font-size: 5em;
+    margin-inline: 0.5rem;
+    filter: opacity(0.6) brightness(100%);
+  }
+
   .sprite {
     margin-left: 0.5rem;
     padding-bottom: 1rem;

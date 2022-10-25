@@ -5,7 +5,7 @@ import PokeCardContainer, { CardContainerProps } from './PokeCardContainer'
 import useAttacker from 'hooks/useAttacker'
 import Spinner from 'components/Spinner/Spinner'
 import { Pokemon } from 'types/pokemon'
-import { pokemonTypesNames } from 'types/pokemonTypes'
+import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
 
 type PokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
 
@@ -19,10 +19,13 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
     return `${attacker?.name} hits x${from} to ${type}`
   }
 
+  const typeColor = pokemonTypes.get(pokemon.types[0]).color
+
   if (loading) return <Spinner />
   return (
     <PokeCardContainer {...props} className={styles.card}>
       <>
+        <p className={styles.number} style={{ color: typeColor }}>{pokemon.number}</p>
         <img src={pokemon.sprite} className={styles.sprite} />
         <section className={styles.content}>
           <h1>{pokemon.name}</h1>
