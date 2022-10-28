@@ -22,6 +22,12 @@ export interface PokemonAPI {
       }
     }
   }
+  stats: [
+    {
+      base_stat: number
+      stat: { name: string }
+    }
+  ]
 }
 
 export interface Pokemon {
@@ -29,6 +35,7 @@ export interface Pokemon {
   types: pokemonTypesNames[]
   number: number
   sprite: string
+  speed: number
   abilities: Abilitie[]
   typesRelations: TypeRelations[]
   weaknessByType: weaknessByType
@@ -37,8 +44,9 @@ export interface Pokemon {
 export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
   const formattedPokemon: Pokemon = {
     name: 'unknown',
-    types: [pokemonTypesNames.UNKNOWN],
+    types: [pokemonTypesNames.NORMAL],
     number: 9999999,
+    speed: 0,
     sprite: '',
     abilities: [],
     typesRelations: [],
@@ -48,6 +56,8 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
   formattedPokemon.name = pokemon.name
   formattedPokemon.types = pokemon.types.map(({ type }) => type.name)
   formattedPokemon.number = pokemon.order
+  formattedPokemon.speed = pokemon.stats
+    .filter(({ stat }) => stat.name === 'speed')?.at(0)?.base_stat ?? 0
   formattedPokemon.sprite =
     pokemon.sprites.other.home.front_default ??
     pokemon.sprites.versions['generation-v']['black-white'].animated.front_default ??

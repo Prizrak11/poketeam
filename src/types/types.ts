@@ -26,7 +26,9 @@ export interface TypeRelations {
   relations: relations
 }
 
-export type weaknessByType = { [T in pokemonTypesNames]: { to: number, from: number } }
+export type weaknessByType = {
+  [T in pokemonTypesNames]: { to: number, from: number }
+}
 
 export const initialWeaknewssByTpe: weaknessByType = {
   [pokemonTypesNames.NORMAL]: { to: 1, from: 1 },
@@ -46,13 +48,13 @@ export const initialWeaknewssByTpe: weaknessByType = {
   [pokemonTypesNames.ICE]: { to: 1, from: 1 },
   [pokemonTypesNames.DRAGON]: { to: 1, from: 1 },
   [pokemonTypesNames.DARK]: { to: 1, from: 1 },
-  [pokemonTypesNames.FAIRY]: { to: 1, from: 1 },
-  [pokemonTypesNames.UNKNOWN]: { to: 1, from: 1 },
-  [pokemonTypesNames.SHADOW]: { to: 1, from: 1 }
+  [pokemonTypesNames.FAIRY]: { to: 1, from: 1 }
 }
 
 export const unifyTypeRelations = (types: TypeRelations[]): weaknessByType => {
-  const typeRelations = structuredClone(initialWeaknewssByTpe) as { [T in pokemonTypesNames]: { to: number | number[], from: number | number[] } }
+  const typeRelations = structuredClone(initialWeaknewssByTpe) as {
+    [T in pokemonTypesNames]: { to: number | number[], from: number | number[] }
+  }
 
   const addToType = (type: pokemonTypesNames, value: number, side: 'to' | 'from'): void => {
     const current = typeRelations[type][side]
@@ -70,23 +72,15 @@ export const unifyTypeRelations = (types: TypeRelations[]): weaknessByType => {
   })
 
   Object.entries(typeRelations).forEach(([type, { to, from }]) => {
-    console.log(type, { to, from })
-
     typeRelations[type as pokemonTypesNames].to = Array.isArray(to) ? to.reduce((a, b) => a * b) : to
     typeRelations[type as pokemonTypesNames].from = Array.isArray(from) ? from.reduce((a, b) => a * b) : from
   })
-
-  console.log({ typeRelations: Object.freeze(typeRelations) })
 
   return Object.freeze(typeRelations) as weaknessByType
 }
 
 export const transformApiToTypeRelation = (type: TypeRelationsAPI): TypeRelations => {
-  const sanitized: TypeRelations = {
-    name: '',
-    relations: {
-    }
-  }
+  const sanitized: TypeRelations = { name: '', relations: {} }
 
   const { damage_relations: DmgR } = type
 
