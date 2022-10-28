@@ -1,33 +1,32 @@
-import { initialWeaknewssByTpe, TypeRelations, weaknessByType } from './types'
+import { initialWeaknewssByTpe, weaknessByType } from './types'
 import { Abilitie } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
 
-export interface PokemonAPI {
-  name: string
-  types: Array<{ slot: number, type: { name: pokemonTypesNames, url: string } }>
-  order: number
-  abilities: [
-    {
-      ability: { name: string, url: string }
-    }
-  ]
-  sprites: {
-    front_default: string
-    other: { home: { front_default: string } }
-    versions: {
-      ['generation-v']: {
-        ['black-white']: {
-          animated: { front_default: string }
-        }
+interface APISprites {
+  front_default: string
+  other: { home: { front_default: string } }
+  versions: {
+    ['generation-v']: {
+      ['black-white']: {
+        animated: { front_default: string }
       }
     }
   }
-  stats: [
-    {
-      base_stat: number
-      stat: { name: string }
-    }
-  ]
+}
+
+interface APIAbilitie {ability: { name: string, url: string }}
+
+interface APIType { slot: number, type: { name: pokemonTypesNames, url: string } }
+
+interface APIStat { base_stat: number, stat: { name: string } }
+
+export interface PokemonAPI {
+  name: string
+  types: APIType[]
+  order: number
+  abilities: APIAbilitie[]
+  sprites: APISprites
+  stats: APIStat[]
 }
 
 export interface Pokemon {
@@ -37,31 +36,30 @@ export interface Pokemon {
   sprite: string
   speed: number
   abilities: Abilitie[]
-  typesRelations: TypeRelations[]
   weaknessByType: weaknessByType
 }
 
+const getSprites = (sprites: APISprites): string => {
+  const { other, versions, front_default: frontDefault } = sprites
+
+  return other.home.front_default ??
+    versions['generation-v']['black-white'].animated.front_default ??
+    frontDefault
+}
+
+const getStat = (stats: APIStat[], name: string): number =>
+  stats.filter(({ stat }) => stat.name === name).at(0)?.base_stat ?? 0
+
 export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
-  const formattedPokemon: Pokemon = {
-    name: 'unknown',
-    types: [pokemonTypesNames.NORMAL],
-    number: 9999999,
-    speed: 0,
-    sprite: '',
+  const { name, types, order, stats, sprites } = pokemon
+
+  return {
+    name,
+    types: types.map(({ type }) => type.name),
+    number: order,
+    speed: getStat(stats, 'speed'),
+    sprite: getSprites(sprites),
     abilities: [],
-    typesRelations: [],
     weaknessByType: structuredClone(initialWeaknewssByTpe)
   }
-
-  formattedPokemon.name = pokemon.name
-  formattedPokemon.types = pokemon.types.map(({ type }) => type.name)
-  formattedPokemon.number = pokemon.order
-  formattedPokemon.speed = pokemon.stats
-    .filter(({ stat }) => stat.name === 'speed')?.at(0)?.base_stat ?? 0
-  formattedPokemon.sprite =
-    pokemon.sprites.other.home.front_default ??
-    pokemon.sprites.versions['generation-v']['black-white'].animated.front_default ??
-    pokemon.sprites.front_default
-
-  return formattedPokemon
 }

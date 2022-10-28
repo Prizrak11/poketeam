@@ -1,3 +1,4 @@
+import { multiplyArray } from './../utils/math'
 import { pokemonTypesNames } from './pokemonTypes'
 
 export interface TypeRelationsAPI {
@@ -21,10 +22,7 @@ interface relations {
   nullFrom?: [{ name: pokemonTypesNames }]
 }
 
-export interface TypeRelations {
-  name: string
-  relations: relations
-}
+export interface TypeRelations { name: string, relations: relations}
 
 export type weaknessByType = {
   [T in pokemonTypesNames]: { to: number, from: number }
@@ -72,27 +70,25 @@ export const unifyTypeRelations = (types: TypeRelations[]): weaknessByType => {
   })
 
   Object.entries(typeRelations).forEach(([type, { to, from }]) => {
-    typeRelations[type as pokemonTypesNames].to = Array.isArray(to) ? to.reduce((a, b) => a * b) : to
-    typeRelations[type as pokemonTypesNames].from = Array.isArray(from) ? from.reduce((a, b) => a * b) : from
+    typeRelations[type as pokemonTypesNames].to = multiplyArray(to)
+    typeRelations[type as pokemonTypesNames].from = multiplyArray(from)
   })
 
-  return Object.freeze(typeRelations) as weaknessByType
+  return typeRelations as weaknessByType
 }
 
 export const transformApiToTypeRelation = (type: TypeRelationsAPI): TypeRelations => {
-  const sanitized: TypeRelations = { name: '', relations: {} }
+  const { name, damage_relations: DmgR } = type
 
-  const { damage_relations: DmgR } = type
-
-  sanitized.name = type.name
-  sanitized.relations = {
-    doubleTo: DmgR.double_damage_to.length > 0 ? DmgR.double_damage_to : undefined,
-    doubleFrom: DmgR.double_damage_from.length > 0 ? DmgR.double_damage_from : undefined,
-    halfTo: DmgR.half_damage_to.length > 0 ? DmgR.half_damage_to : undefined,
-    halfFrom: DmgR.half_damage_from.length > 0 ? DmgR.half_damage_from : undefined,
-    nullTo: DmgR.no_damage_to.length > 0 ? DmgR.no_damage_to : undefined,
-    nullFrom: DmgR.no_damage_from.length > 0 ? DmgR.no_damage_from : undefined
+  return {
+    name,
+    relations: {
+      doubleTo: DmgR.double_damage_to.length > 0 ? DmgR.double_damage_to : undefined,
+      doubleFrom: DmgR.double_damage_from.length > 0 ? DmgR.double_damage_from : undefined,
+      halfTo: DmgR.half_damage_to.length > 0 ? DmgR.half_damage_to : undefined,
+      halfFrom: DmgR.half_damage_from.length > 0 ? DmgR.half_damage_from : undefined,
+      nullTo: DmgR.no_damage_to.length > 0 ? DmgR.no_damage_to : undefined,
+      nullFrom: DmgR.no_damage_from.length > 0 ? DmgR.no_damage_from : undefined
+    }
   }
-
-  return sanitized
 }

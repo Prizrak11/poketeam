@@ -5,3 +5,5 @@ export const getFraction = (decimal: number): string => {
     ? `${decimal * denominator}/${denominator}`
     : decimal.toString()
 }
+
+export const multiplyArray = (value: number[] | number): number => Array.isArray(value) ? value.reduce((a, b) => a * b) : value

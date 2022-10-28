@@ -16,13 +16,10 @@ export interface Abilitie {
 }
 
 export const transformApiToAbilitie = (abilitie: AbilitieAPI): Abilitie => {
-  const sanitized: Abilitie = {
-    name: '',
-    shortEffect: ''
+  const { name, effect_entries: effects } = abilitie
+
+  return {
+    name,
+    shortEffect: effects.find(({ language }) => language.name === 'en')?.short_effect ?? name
   }
-
-  sanitized.name = abilitie.name
-  sanitized.shortEffect = abilitie.effect_entries.find((entrie) => entrie.language.name === 'en')?.short_effect ?? abilitie.name
-
-  return sanitized
 }
