@@ -8,11 +8,10 @@ export type pokeSearchFunc = (pokemon: pokemonSearchType) => void
 
 interface pokeSearchProps {
   onPokemonClick: pokeSearchFunc
-  filters?: string[]
 }
 
-const PokeSearch: FC<pokeSearchProps> = ({ onPokemonClick, filters }): JSX.Element => {
-  const { pokemonList, handleInputChange, isLoading } = usePokeSearch({ filters })
+const PokeSearch: FC<pokeSearchProps> = ({ onPokemonClick }): JSX.Element => {
+  const { list: pokemonList, handleInputChange, isLoading } = usePokeSearch()
   const [keyFocus, setKeyFocus] = useState<number>(0)
   const buttonArr = useRef<Array<HTMLButtonElement | null>>([])
 
