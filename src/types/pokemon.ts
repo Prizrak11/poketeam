@@ -31,6 +31,7 @@ export interface PokemonAPI {
 }
 
 export interface Pokemon {
+  id: string
   name: string
   types: PokemonType[]
   number: number
@@ -56,6 +57,7 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
 
   return {
     name,
+    id: crypto.randomUUID(),
     types: types.map(({ type }) => pokemonTypes.get(type.name)),
     number: order,
     speed: getStat(stats, 'speed'),

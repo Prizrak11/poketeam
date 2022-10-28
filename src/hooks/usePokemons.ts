@@ -32,7 +32,7 @@ const usePokemon = (): usePokemonRes => {
   }
 
   const removePokemonFromTeam = (pokemon: Pokemon): void => {
-    const filtered = pokemonTeam.filter(({ number }) => number !== pokemon.number)
+    const filtered = pokemonTeam.filter(({ id }) => id !== pokemon.id)
     dispatch({ type: Actions.CHANGE_POKEMON_TEAM, payload: filtered })
   }
 
