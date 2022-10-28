@@ -1,6 +1,6 @@
-import { Abilitie, AbilitieAPI, transformApiToAbilitie } from './../types/abilities'
+import { PokemonAbilitie, AbilitieAPI, transformApiToAbilitie } from './../types/abilities'
 
-export const getAbilitieInfo = async (url: string): Promise<Abilitie> => {
+export const getAbilitieInfo = async (url: string): Promise<PokemonAbilitie> => {
   return await new Promise((resolve, reject) => {
     fetch(url)
       .then(async data => await data.json())

@@ -28,26 +28,9 @@ export type weaknessByType = {
   [T in pokemonTypesNames]: { to: number, from: number }
 }
 
-export const initialWeaknewssByTpe: weaknessByType = {
-  [pokemonTypesNames.NORMAL]: { to: 1, from: 1 },
-  [pokemonTypesNames.FIGHTING]: { to: 1, from: 1 },
-  [pokemonTypesNames.FLYING]: { to: 1, from: 1 },
-  [pokemonTypesNames.POISON]: { to: 1, from: 1 },
-  [pokemonTypesNames.GROUND]: { to: 1, from: 1 },
-  [pokemonTypesNames.ROCK]: { to: 1, from: 1 },
-  [pokemonTypesNames.BUG]: { to: 1, from: 1 },
-  [pokemonTypesNames.GHOST]: { to: 1, from: 1 },
-  [pokemonTypesNames.STEEL]: { to: 1, from: 1 },
-  [pokemonTypesNames.FIRE]: { to: 1, from: 1 },
-  [pokemonTypesNames.WATER]: { to: 1, from: 1 },
-  [pokemonTypesNames.GRASS]: { to: 1, from: 1 },
-  [pokemonTypesNames.ELECTRIC]: { to: 1, from: 1 },
-  [pokemonTypesNames.PSYCHIC]: { to: 1, from: 1 },
-  [pokemonTypesNames.ICE]: { to: 1, from: 1 },
-  [pokemonTypesNames.DRAGON]: { to: 1, from: 1 },
-  [pokemonTypesNames.DARK]: { to: 1, from: 1 },
-  [pokemonTypesNames.FAIRY]: { to: 1, from: 1 }
-}
+export const initialWeaknewssByTpe = Object
+  .values(pokemonTypesNames)
+  .reduce((last, current) => ({ ...last, [current]: { to: 1, from: 1 } }), {}) as weaknessByType
 
 export const unifyTypeRelations = (types: TypeRelations[]): weaknessByType => {
   const typeRelations = structuredClone(initialWeaknewssByTpe) as {

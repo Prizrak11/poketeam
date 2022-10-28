@@ -2,7 +2,7 @@ import { FC } from 'react'
 import TypeBadge from 'components/TypeBadge/TypeBadge'
 import PokeCardContainer, { CardContainerProps } from './PokeCardContainer'
 import styles from './PokeCard.module.css'
-import { pokemonTypesNames } from 'types/pokemonTypes'
+import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
 
 type FullPokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
 
@@ -24,7 +24,10 @@ const FullPokeCard: FC<FullPokeCardProps> = (props): JSX.Element => {
         <div className={styles.weakness}>
           {Object.entries(pokemon.weaknessByType)
             .filter(([_, { from, to }]) => from !== 1 || to !== 1)
-            .map(([type, values], id) => <TypeBadge key={id} type={type as pokemonTypesNames} weak={{ ...values }} />
+            .map(([type, values], id) => {
+              const pokeType = pokemonTypes.get(type as pokemonTypesNames)
+              return <TypeBadge key={id} type={pokeType} weak={{ ...values }} />
+            }
             )}
         </div>
       </div>

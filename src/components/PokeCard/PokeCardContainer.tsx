@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { pokemonTypes } from 'types/pokemonTypes'
 import { Pokemon } from 'types/pokemon'
 import styles from './PokeCard.module.css'
 
@@ -12,10 +11,10 @@ export interface CardContainerProps {
 
 const PokeCardContainer: FC<CardContainerProps> = ({ pokemon, remove, className, children }): JSX.Element => {
   const typeColor = pokemon.types.length === 1
-    ? pokemonTypes.get(pokemon.types[0]).color
+    ? pokemon.types[0].color
     : `linear-gradient(45deg,  
-          ${pokemonTypes.get(pokemon.types[0]).color} 50%,
-          ${pokemonTypes.get(pokemon.types[1]).color} 100%)`
+          ${pokemon.types[0].color} 50%,
+          ${pokemon.types[1].color} 100%)`
 
   className = className ?? ''
 

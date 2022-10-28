@@ -5,7 +5,7 @@ import PokeCardContainer, { CardContainerProps } from './PokeCardContainer'
 import useAttacker from 'hooks/useAttacker'
 import Spinner from 'components/Spinner/Spinner'
 import { Pokemon } from 'types/pokemon'
-import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
+import { PokemonType } from 'types/pokemonTypes'
 import ReactToolTip from 'react-tooltip'
 
 type PokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
@@ -14,13 +14,13 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
   const { attacker, loading } = useAttacker()
   const { pokemon } = props
 
-  const getTip = (type: pokemonTypesNames, attacker?: Pokemon, from?: number): string => {
-    if (attacker == null || from == null || from === 1) return type
-    if (from === 0) return `${attacker?.name} doesn't affect ${type}`
-    return `${attacker?.name} hits x${from} to ${type}`
+  const getTip = (type: PokemonType, attacker?: Pokemon, from?: number): string => {
+    if (attacker == null || from == null || from === 1) return type.name
+    if (from === 0) return `${attacker?.name} doesn't affect ${type.name}`
+    return `${attacker?.name} hits x${from} to ${type.name}`
   }
 
-  const typeColor = pokemonTypes.get(pokemon.types[0]).color
+  const typeColor = pokemon.types[0].color
 
   if (loading) return <Spinner />
   return (
@@ -33,7 +33,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
           <h1>{pokemon.name}</h1>
           <div className={styles.types}>
             {pokemon.types.map((type, id) => {
-              const from = attacker?.weaknessByType[type].to
+              const from = attacker?.weaknessByType[type.name].to
               return (
                 <div key={id} data-tip={getTip(type, attacker, from)}>
                   <TypeBadge type={type} weak={{ from }} />

@@ -1,14 +1,14 @@
 import { FC } from 'react'
-import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
+import { PokemonType } from 'types/pokemonTypes'
 import styles from './TypeBadge.module.css'
 
 interface BadgeProps {
-  type: pokemonTypesNames
+  type: PokemonType
   weak?: { from?: number, to?: number }
 }
 
 const TypeBadge: FC<BadgeProps> = ({ type, weak }): JSX.Element => {
-  const { color, name, icon } = pokemonTypes.get(type)
+  const { color, name, icon } = type
 
   const effectiveNessColor: { [key: number]: string[] } = {
     4: ['#1A8828', '#bf4040'],

@@ -1,5 +1,6 @@
+import { PokemonType, pokemonTypes } from 'types/pokemonTypes'
 import { initialWeaknewssByTpe, weaknessByType } from './types'
-import { Abilitie } from './abilities'
+import { PokemonAbilitie } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
 
 interface APISprites {
@@ -16,7 +17,7 @@ interface APISprites {
 
 interface APIAbilitie {ability: { name: string, url: string }}
 
-interface APIType { slot: number, type: { name: pokemonTypesNames, url: string } }
+export interface APIType { slot: number, type: { name: pokemonTypesNames, url: string } }
 
 interface APIStat { base_stat: number, stat: { name: string } }
 
@@ -31,11 +32,11 @@ export interface PokemonAPI {
 
 export interface Pokemon {
   name: string
-  types: pokemonTypesNames[]
+  types: PokemonType[]
   number: number
   sprite: string
   speed: number
-  abilities: Abilitie[]
+  abilities: PokemonAbilitie[]
   weaknessByType: weaknessByType
 }
 
@@ -55,7 +56,7 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
 
   return {
     name,
-    types: types.map(({ type }) => type.name),
+    types: types.map(({ type }) => pokemonTypes.get(type.name)),
     number: order,
     speed: getStat(stats, 'speed'),
     sprite: getSprites(sprites),

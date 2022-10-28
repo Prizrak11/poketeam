@@ -1,21 +1,21 @@
+export interface EffectsAPI {
+  short_effect: string
+  language: {
+    name: string
+  }
+}
+
 export interface AbilitieAPI {
-  effect_entries: [
-    {
-      short_effect: string
-      language: {
-        name: string
-      }
-    }
-  ]
+  effect_entries: EffectsAPI[]
   name: string
 }
 
-export interface Abilitie {
+export interface PokemonAbilitie {
   name: string
   shortEffect: string
 }
 
-export const transformApiToAbilitie = (abilitie: AbilitieAPI): Abilitie => {
+export const transformApiToAbilitie = (abilitie: AbilitieAPI): PokemonAbilitie => {
   const { name, effect_entries: effects } = abilitie
 
   return {
