@@ -55,4 +55,11 @@
     top: 60%;
     right: 85%;
   }
+
+  &.big {
+    padding: 0.3rem 0.7rem;
+    color: white !important;
+    width: fit-content;
+    height: fit-content;
+  }
 }

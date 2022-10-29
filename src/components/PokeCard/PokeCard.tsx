@@ -8,11 +8,13 @@ import { Pokemon } from 'types/pokemon'
 import { PokemonType } from 'types/pokemonTypes'
 import ReactToolTip from 'react-tooltip'
 
-type PokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
+interface PokeCardProps extends Omit<CardContainerProps, 'children' | 'className'> {
+  open?: boolean
+}
 
 const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
   const { attacker, loading } = useAttacker()
-  const { pokemon } = props
+  const { pokemon, open = false } = props
 
   const getTip = (type: PokemonType, attacker?: Pokemon, from?: number): string => {
     if (attacker == null || from == null || from === 1) return type.name
@@ -24,7 +26,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
 
   if (loading) return <Spinner />
   return (
-    <PokeCardContainer {...props} className={styles.card}>
+    <PokeCardContainer {...props} className={`${styles.card} ${open ? styles.open : ''}`}>
       <>
         <ReactToolTip className={styles.tooltip} />
         <p className={styles.number} style={{ color: typeColor }}>{pokemon.number}</p>
@@ -36,7 +38,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
               const from = attacker?.weaknessByType[type.name].to
               return (
                 <div key={id} data-tip={getTip(type, attacker, from)}>
-                  <TypeBadge type={type} weak={{ from }} />
+                  <TypeBadge type={type} weak={{ from }} big={open} />
                 </div>
               )
             })}

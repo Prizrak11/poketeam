@@ -11,7 +11,6 @@
     text-transform: capitalize;
   }
 
-
   .background {
     filter: opacity(0.8) blur(1em) contrast(70%) brightness(110%);
     height: 100%;
@@ -22,6 +21,14 @@
     clip-path: var(--pixel-corners-md);
     box-shadow: inset 0px 0px 5px -3px white;
   }
+
+  &:hover {
+  cursor: pointer;
+
+  .background {
+    filter: opacity(0.9) blur(1em) contrast(70%) brightness(110%);
+  }
+}
 
   .removeBtn {
     position: absolute;
@@ -68,7 +75,7 @@
     margin-top: -5%;
     object-fit: contain;
     z-index: 10;
-    filter: drop-shadow(5px 5px 0 rgba(0,0,0,0.2))
+    filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 0.2));
   }
 
   .content {
@@ -106,6 +113,21 @@
       .background {
         filter: opacity(0.4);
       }
+    }
+  }
+  
+  transition: height ease .2s;
+
+  &.open {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: space-between;
+    height: 10rem;
+    .sprite {
+      transition: none;
+      height: auto;
+      width: 100%;
+      padding: 0;
     }
   }
 }

@@ -5,10 +5,13 @@ import styles from './TypeBadge.module.css'
 interface BadgeProps {
   type: PokemonType
   weak?: { from?: number, to?: number }
+  big?: boolean
 }
 
-const TypeBadge: FC<BadgeProps> = ({ type, weak }): JSX.Element => {
+const TypeBadge: FC<BadgeProps> = ({ type, weak, big }): JSX.Element => {
   const { color, name, icon } = type
+
+  big = big ?? false
 
   const effectiveNessColor: { [key: number]: string[] } = {
     4: ['#1A8828', '#bf4040'],
@@ -32,9 +35,11 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak }): JSX.Element => {
   }
 
   return (
-    <div style={{ color }} className={styles.badge}>
+    <div style={{ color }} className={`${styles.badge} ${big ? styles.big : ''}`}>
       <div style={{ backgroundColor: color }} className={styles.background} />
-      <img src={icon} alt={name} className={styles.icon} />
+      {
+         big ? <p>{name}</p> : <img src={icon} alt={name} className={styles.icon} />
+      }
       {
         (weak?.from != null) && (weak.from !== 1) &&
           <span className={styles.weak} style={{ backgroundColor: side(weak.from, true) }}>
