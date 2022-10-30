@@ -1,12 +1,13 @@
-import { pokeSearchFunc } from './../components/PokeSearch/PokeSearch'
 import { Actions } from 'context/reducer'
 import { useAppContext } from 'context/AppContext'
-import { pokemonSearchType } from 'services/pokemonSearchList'
+import { searchItemAPI } from 'types/searchItem'
+
+export type searchFuncType = (query: searchItemAPI) => void
 
 interface IsearchModal {
   isOpen: boolean
-  searchAction: pokeSearchFunc
-  openModal: (action?: pokeSearchFunc) => void
+  searchAction: searchFuncType
+  openModal: (action?: searchFuncType) => void
   closeModal: () => void
 }
 
@@ -17,7 +18,7 @@ const useSearchModal = (): IsearchModal => {
 
   const searchAction = (searchModal.action != null) ? searchModal.action : function () {}
 
-  const openModal = (action?: (pokemon: pokemonSearchType) => void): void => {
+  const openModal = (action?: searchFuncType): void => {
     dispatch({ type: Actions.HANDLE_SEARCH_MODAL, payload: { state: true, action } })
   }
 

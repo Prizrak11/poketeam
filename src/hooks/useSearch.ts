@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react'
+import { searchItemAPI } from 'types/searchItem'
 import { useDebouncedCallback } from 'use-debounce'
 import { sanitizePokemon } from 'utils/sanitizePokemon'
 
-export interface useSearchReturn<T> {
-  list: T[] | undefined
+export interface useSearchReturn {
+  list: searchItemAPI[] | undefined
   handleInputChange: (query: string) => void
   isLoading: boolean
 }
 
-interface useSearchProps<T> {
-  getter: () => Promise<T[]>
-  filter: (arr: T[], query: string) => T[]
+interface useSearchProps {
+  getter: () => Promise<searchItemAPI[]>
+  filter: (arr: searchItemAPI[], query: string) => searchItemAPI[]
 }
 
-const useSearch = <T>({ getter, filter }: useSearchProps<T>): useSearchReturn<T> => {
+const useSearch = ({ getter, filter }: useSearchProps): useSearchReturn => {
   const [isLoading, setIsLoading] = useState(false)
-  const [search, setSearch] = useState<T[]>()
-  const [list, setList] = useState<T[]>()
+  const [search, setSearch] = useState<searchItemAPI[]>()
+  const [list, setList] = useState<searchItemAPI[]>()
 
   const getListFromApi = (): void => {
     setIsLoading(true)

@@ -1,9 +1,9 @@
-import { pokeSearchFunc } from 'components/PokeSearch/PokeSearch'
+import { searchFuncType } from 'hooks/useSearchModal'
 import { Pokemon } from 'types/pokemon'
 
 export interface AppState {
   pokemonTeam: Pokemon[]
-  searchModal: { state: boolean, action?: pokeSearchFunc }
+  searchModal: { state: boolean, action?: searchFuncType }
   attacker?: Pokemon
 }
 

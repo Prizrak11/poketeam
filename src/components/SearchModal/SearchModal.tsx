@@ -1,14 +1,15 @@
 import { FC, MouseEvent } from 'react'
-import PokeSearch, { pokeSearchFunc } from 'components/PokeSearch/PokeSearch'
-import useSearchModal from 'hooks/useSearchModal'
+import SearchInput from 'components/SearchInput/SearchInput'
+import useSearchModal, { searchFuncType } from 'hooks/useSearchModal'
 import styles from './SearchModal.module.css'
+import usePokeSearch from 'hooks/usePokeSearch'
 
 const SearchModal: FC = (): JSX.Element => {
   const { isOpen, closeModal, searchAction } = useSearchModal()
 
   const stopClose = (evt: MouseEvent): void => evt.stopPropagation()
 
-  const onSearch: pokeSearchFunc = pokemon => {
+  const onSearch: searchFuncType = pokemon => {
     closeModal()
     searchAction(pokemon)
   }
@@ -20,7 +21,11 @@ const SearchModal: FC = (): JSX.Element => {
         <div className={styles.background} />
         <h1>Who's that Pokemon</h1>
         <span className={styles.icon}>?</span>
-        <PokeSearch onPokemonClick={onSearch} />
+        <SearchInput
+          onOptionClick={onSearch}
+          searchHook={usePokeSearch}
+          placeholder='Search for a pokemon'
+        />
       </div>
     </div>
   )

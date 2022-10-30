@@ -1,9 +1,7 @@
+import { searchItemAPI } from 'types/searchItem'
 import { POKE_API } from './../consts'
-export interface pokemonSearchType {
-  name: string
-}
 
-export const pokemonSearchList = async (): Promise<pokemonSearchType[]> => {
+export const pokemonSearchList = async (): Promise<searchItemAPI[]> => {
   const localKey = 'pokemonList'
 
   return await new Promise((resolve, reject) => {
