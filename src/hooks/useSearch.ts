@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { searchItemAPI } from 'types/searchItem'
 import { useDebouncedCallback } from 'use-debounce'
 import { sanitizePokemon } from 'utils/sanitizePokemon'
 
 export interface useSearchReturn {
   list: searchItemAPI[] | undefined
-  handleInputChange: (query: string) => void
+  handleInputChange: (evt: ChangeEvent<HTMLInputElement>) => void
+  inputValue: string
   isLoading: boolean
+  clearInput: () => void
 }
 
 interface useSearchProps {
@@ -17,6 +19,7 @@ interface useSearchProps {
 const useSearch = ({ getter, filter }: useSearchProps): useSearchReturn => {
   const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState<searchItemAPI[]>()
+  const [inputValue, setInputValue] = useState<string>('')
   const [list, setList] = useState<searchItemAPI[]>()
 
   const getListFromApi = (): void => {
@@ -25,6 +28,14 @@ const useSearch = ({ getter, filter }: useSearchProps): useSearchReturn => {
       .then(setSearch)
       .finally(() => setIsLoading(false))
   }
+
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>): void => { setInputValue(evt.target.value) }
+
+  const clearInput = (): void => setInputValue('')
+
+  useEffect(() => {
+    debounceHandleChange(inputValue)
+  }, [inputValue])
 
   useEffect(() => {
     getListFromApi()
@@ -46,8 +57,10 @@ const useSearch = ({ getter, filter }: useSearchProps): useSearchReturn => {
 
   return {
     list,
-    handleInputChange: debounceHandleChange,
-    isLoading
+    handleInputChange,
+    inputValue,
+    isLoading,
+    clearInput
   }
 }
 

@@ -3,6 +3,7 @@
 .search {
   width: 100%;
   position: relative;
+  z-index: 999;
 
   .input {
     padding: 0.7rem 1rem;

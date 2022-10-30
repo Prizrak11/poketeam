@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEventHandler, useState, useRef, FC } from 'react'
+import { KeyboardEventHandler, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import styles from './SearchInput.module.css'
 import Spinner from 'components/Spinner/Spinner'
 import { useSearchReturn } from 'hooks/useSearch'
@@ -8,14 +8,22 @@ interface searchInputProps {
   onOptionClick: searchFuncType
   searchHook: () => useSearchReturn
   placeholder: string
+  className?: string
 }
 
-const SearchInput: FC<searchInputProps> = ({ onOptionClick, searchHook, placeholder }): JSX.Element => {
-  const { list, handleInputChange, isLoading } = searchHook()
+export interface SearchInputElement {
+  clearInput: () => void
+}
+
+const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
+  onOptionClick,
+  searchHook,
+  placeholder,
+  className
+}, forwardedRef): JSX.Element => {
+  const { list, handleInputChange, isLoading, inputValue, clearInput } = searchHook()
   const [keyFocus, setKeyFocus] = useState<number>(0)
   const buttonArr = useRef<Array<HTMLButtonElement | null>>([])
-
-  const handleChange = (evt: ChangeEvent<HTMLInputElement>): void => { handleInputChange(evt.target.value) }
 
   const handleArrows: KeyboardEventHandler<HTMLInputElement> = evt => {
     if (list == null) return
@@ -27,12 +35,15 @@ const SearchInput: FC<searchInputProps> = ({ onOptionClick, searchHook, placehol
     if (keyFocus !== 0) buttonArr.current.at(keyFocus - 1)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
+  useImperativeHandle(forwardedRef, () => ({ clearInput }))
+
   if (isLoading) return <Spinner />
   return (
-    <div className={styles.search}>
+    <div className={`${styles.search} ${className ?? ''}`}>
       <input
         type='text'
-        onChange={handleChange}
+        value={inputValue}
+        onChange={handleInputChange}
         placeholder={placeholder}
         className={styles.input}
         autoFocus
@@ -59,6 +70,6 @@ const SearchInput: FC<searchInputProps> = ({ onOptionClick, searchHook, placehol
       </div>
     </div>
   )
-}
+})
 
 export default SearchInput
