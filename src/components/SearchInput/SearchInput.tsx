@@ -1,8 +1,8 @@
 import { KeyboardEventHandler, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import styles from './SearchInput.module.css'
 import Spinner from 'components/Spinner/Spinner'
-import { useSearchReturn } from 'hooks/useSearch'
-import { searchFuncType } from 'hooks/useSearchModal'
+import { useSearchReturn } from 'hooks/search/useSearch'
+import { searchFuncType } from 'hooks/modals/useSearchModal'
 
 interface searchInputProps {
   onOptionClick: searchFuncType

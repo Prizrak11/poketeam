@@ -1,8 +1,8 @@
-import { pokemonSearchList } from './../services/pokemonSearchList'
+import { pokemonSearchList } from '../../services/pokemonSearchList'
 import { sanitizePokemon } from 'utils/sanitizePokemon'
 import useSearch, { useSearchReturn } from './useSearch'
 
-const usePokeSearch = (): useSearchReturn => useSearch({
+const usePokemonSearch = (): useSearchReturn => useSearch({
   getter: pokemonSearchList,
   filter: (pokemons, query) => {
     return pokemons.filter(({ name }) => {
@@ -11,4 +11,4 @@ const usePokeSearch = (): useSearchReturn => useSearch({
   }
 })
 
-export default usePokeSearch
+export default usePokemonSearch

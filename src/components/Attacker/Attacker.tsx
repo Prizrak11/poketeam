@@ -2,13 +2,13 @@ import FullPokeCard from 'components/PokeCard/FullCard'
 import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import useAttacker from 'hooks/useAttacker'
-import useSearchModal from 'hooks/useSearchModal'
+import { usePokemonSearchModal } from 'hooks/modals'
 import { FC } from 'react'
 import styles from './Atacker.module.css'
 
 const Attacker: FC = (): JSX.Element => {
   const { loading, attacker, addPokemonToEnemyFromApi, removePokemonEnemy } = useAttacker()
-  const { openModal } = useSearchModal()
+  const { openModal } = usePokemonSearchModal()
 
   const openModalToAttacker = (): void => openModal(addPokemonToEnemyFromApi)
 

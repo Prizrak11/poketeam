@@ -3,12 +3,12 @@ import usePokemon from 'hooks/usePokemons'
 import PokeCard from '../PokeCard/PokeCard'
 import styles from './PokeTeam.module.css'
 import VoidCard from 'components/PokeCard/VoidCard'
-import useSearchModal from 'hooks/useSearchModal'
 import Spinner from 'components/Spinner/Spinner'
+import { usePokemonSearchModal } from 'hooks/modals'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
-  const { openModal } = useSearchModal()
+  const { openModal } = usePokemonSearchModal()
   const pokemonRefs = useRef<Array<HTMLDivElement | null>>([])
   const [currentOpen, setCurrentOpen] = useState<number>()
 
