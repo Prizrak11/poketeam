@@ -22,10 +22,11 @@ export interface PokemonMove {
 }
 
 export const fromApiToMove = (move: MoveAPI): PokemonMove => {
-  const { type, effect_entries: effectsAPI } = move
+  const { name, type, effect_entries: effectsAPI } = move
 
   return {
     ...move,
+    name: name.replaceAll('-', ' '),
     type: pokemonTypes.get(type.name),
     effect: effectsAPI.find(({ language }) => language.name === 'en')?.short_effect
   }
