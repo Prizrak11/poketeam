@@ -1,0 +1,5 @@
+@define-mixin tooltip {
+  font-size: 0.5rem;
+  padding-bottom: 0.7rem;
+  text-transform: capitalize;
+}

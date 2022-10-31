@@ -1,0 +1,12 @@
+:root {
+  --card-filters: opacity(0.8) blur(1em) contrast(70%) brightness(110%);
+}
+
+@define-mixin card {
+  filter: var(--card-filters);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
