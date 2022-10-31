@@ -2,7 +2,8 @@ import { searchFuncType } from 'hooks/modals/useSearchModal'
 import { Pokemon } from 'types/pokemon'
 
 export enum ModalsTypes {
-  pokemonSearch = 'search-for-specific-pokemon'
+  pokemonSearch = 'search-for-specific-pokemon',
+  moveSearch = 'search-for-specific-move'
 }
 
 export type Modals = {
@@ -26,7 +27,7 @@ export enum Actions {
 
 export const initialState: AppState = {
   pokemonTeam: [],
-  searchModal: { state: { [ModalsTypes.pokemonSearch]: false } },
+  searchModal: { state: { [ModalsTypes.pokemonSearch]: false, [ModalsTypes.moveSearch]: false } },
   attacker: undefined
 }
 
