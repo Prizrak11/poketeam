@@ -6,24 +6,28 @@ interface BadgeProps {
   type: PokemonType
   weak?: { from?: number, to?: number }
   big?: boolean
+  stab?: boolean
 }
 
-const TypeBadge: FC<BadgeProps> = ({ type, weak, big }): JSX.Element => {
+const TypeBadge: FC<BadgeProps> = ({ type, weak, big = false, stab = false }): JSX.Element => {
   const { color, name, icon } = type
 
-  big = big ?? false
-
   const effectiveNessColor: { [key: number]: string[] } = {
+    6: ['#1A8828', '#bf4040'],
     4: ['#1A8828', '#bf4040'],
+    3: ['#64AD62', '#963232'],
     2: ['#64AD62', '#963232'],
+    1.5: ['#64AD62', '#963232'],
     0: ['gray', 'gray'],
+    0.75: ['#9f3737', '#64AD62'],
     0.5: ['#9f3737', '#64AD62'],
+    0.375: ['#bf4040', '#1A8828'],
     0.25: ['#bf4040', '#1A8828']
   }
 
   const side = (value: number, invert?: boolean): string => {
     if (value === 0) return 'gray'
-    return invert == null ? effectiveNessColor[value][0] : effectiveNessColor[value][1]
+    return invert == null ? effectiveNessColor[value]?.[0] : effectiveNessColor[value]?.[1]
   }
 
   const removeCero = (number: number): string => {
@@ -39,6 +43,9 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, big }): JSX.Element => {
       <div style={{ backgroundColor: color }} className={styles.background} />
       {
          big ? <p>{name}</p> : <img src={icon} alt={name} className={styles.icon} />
+      }
+      {
+        stab && <p className={styles.stab}>S</p>
       }
       {
         (weak?.from != null) && (weak.from !== 1) &&

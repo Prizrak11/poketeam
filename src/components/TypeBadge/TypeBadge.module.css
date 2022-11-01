@@ -1,6 +1,5 @@
 @import "../../variables.css";
 
-
 .badge {
   text-transform: uppercase;
   font-size: 0.6rem;
@@ -9,12 +8,12 @@
   align-items: center;
   position: relative;
   width: 1.5rem;
-  filter : drop-shadow(0 0 1px rgba(0,0,0,0.5));
-  
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+
   .tooltip {
     font-size: 0.5rem;
   }
-  
+
   .background {
     width: 100%;
     height: 100%;
@@ -33,7 +32,8 @@
   }
 
   .strength,
-  .weak {
+  .weak,
+  .stab {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,6 +54,13 @@
   .weak {
     top: 60%;
     right: 85%;
+  }
+
+  .stab {
+    font-size: 0.7em;
+    background-color: rgb(60, 118, 217);
+    top: 60%;
+    left: 85%;
   }
 
   &.big {
