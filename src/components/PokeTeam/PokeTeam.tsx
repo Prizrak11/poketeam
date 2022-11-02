@@ -5,6 +5,7 @@ import styles from './PokeTeam.module.css'
 import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import { usePokemonSearchModal } from 'hooks/modals'
+import 'masonry-rows'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
@@ -31,22 +32,24 @@ const PokeTeam: FC = (): JSX.Element => {
   return (
     <div>
       <h1 className={styles.title}>Your Team</h1>
-      <section className={styles.team}>
+      {/* @ts-expect-error */}
+      <masonry-rows gap='1rem'>
         {
-        pokemonTeam.map((pokemon, id) => {
-          if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
-          return (
-            <div
-              key={id}
-              ref={ref => { pokemonRefs.current[id] = ref }}
-              onClick={() => setCurrentOpen(id)}
-            >
-              <PokeCard pokemon={pokemon} remove={removePokemonFromTeam} open={currentOpen === id} />
-            </div>
-          )
-        })
-      }
-      </section>
+          pokemonTeam.map((pokemon, id) => {
+            if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
+            return (
+              <div
+                key={id}
+                ref={ref => { pokemonRefs.current[id] = ref }}
+                onClick={() => setCurrentOpen(id)}
+              >
+                <PokeCard pokemon={pokemon} remove={removePokemonFromTeam} open={currentOpen === id} />
+              </div>
+            )
+          })
+        }
+      {/* @ts-expect-error */}
+      </masonry-rows>
     </div>
   )
 }

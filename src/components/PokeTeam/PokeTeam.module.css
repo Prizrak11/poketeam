@@ -4,15 +4,3 @@
 .title {
   @mixin title;
 }
-
-.team {
-  column-count: 2;
-  width: 100%;
-  justify-self: center;
-  gap: 2rem;
-
-  & > div {
-    break-inside: avoid-column;
-    margin-top: 2rem;
-  }
-}
