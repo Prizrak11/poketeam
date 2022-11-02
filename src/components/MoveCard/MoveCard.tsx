@@ -42,7 +42,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false }): JSX.Element => {
       <div className={styles.badge} data-tip={getTip(move.type, attacker, weak)}>
         <TypeBadge type={move.type} weak={{ to: weak * move.stab }} big={open} stab={Boolean(move.stab > 1)} />
       </div>
-      <p className={styles.title}>{move.name}</p>
+      <p data-tip={move.effect} className={styles.title}>{move.name}</p>
       <section className={styles.info}>
         {
           move.power != null && (

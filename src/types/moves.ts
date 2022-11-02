@@ -9,6 +9,7 @@ export interface MoveAPI {
   power: number
   pp: number
   priority: number
+  effect_chance: number
   effect_entries: EffectsAPI[]
 }
 
@@ -32,13 +33,15 @@ export const addStab = (move: PokemonMove, pokemon: Pokemon): PokemonMove => {
 }
 
 export const fromApiToMove = (move: MoveAPI): PokemonMove => {
-  const { name, type, effect_entries: effectsAPI } = move
+  const { name, type, effect_entries: effectsAPI, effect_chance: chance } = move
 
   return {
     ...move,
     stab: 1,
     name: name.replaceAll('-', ' '),
     type: pokemonTypes.get(type.name),
-    effect: effectsAPI.find(({ language }) => language.name === 'en')?.short_effect
+    effect: effectsAPI
+      .find(({ language }) => language.name === 'en')?.short_effect
+      .replaceAll('$effect_chance%', `${chance}%`)
   }
 }
