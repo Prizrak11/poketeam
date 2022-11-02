@@ -1,4 +1,4 @@
-import { TypeRelations, unifyTypeRelations } from 'types/types'
+import { TypeRelationsAPI, unifyTypeRelations } from 'types/types'
 import { PokemonAbilitie } from './../types/abilities'
 import { transformApiToPokemon, Pokemon, PokemonAPI } from 'types/pokemon'
 import { POKE_API } from '../consts'
@@ -10,7 +10,7 @@ const getAbilities = async (pokemon: PokemonAPI): Promise<PokemonAbilitie[]> => 
   return await Promise.all(pokemon.abilities.map(async ({ ability }) => await getAbilitieInfo(ability.url)))
 }
 
-const getRelations = async (pokemon: PokemonAPI): Promise<TypeRelations[]> => {
+const getRelations = async (pokemon: PokemonAPI): Promise<TypeRelationsAPI[]> => {
   return await Promise.all(pokemon.types.map(async ({ type }) => await getTypeRelations(type.name)))
 }
 

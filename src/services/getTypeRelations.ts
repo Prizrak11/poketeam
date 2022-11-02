@@ -1,7 +1,7 @@
 import { POKE_API } from 'consts'
-import { TypeRelations, TypeRelationsAPI, transformApiToTypeRelation } from 'types/types'
+import { TypeRelationsAPI } from 'types/types'
 
-export const getTypeRelations = async (name: string): Promise<TypeRelations> => {
+export const getTypeRelations = async (name: string): Promise<TypeRelationsAPI> => {
   const localKey = 'relationTypes'
   const localRelations = localStorage.getItem(localKey)
   if (localRelations == null) localStorage.setItem(localKey, JSON.stringify({}))
@@ -14,8 +14,7 @@ export const getTypeRelations = async (name: string): Promise<TypeRelations> => 
     } else {
       fetch(`${POKE_API}type/${name}`)
         .then(async data => await data.json())
-        .then((type: TypeRelationsAPI) => {
-          const relations = transformApiToTypeRelation(type)
+        .then((relations: TypeRelationsAPI) => {
           localStorage.setItem(localKey, JSON.stringify({ ...currentRelations, [name]: relations }))
 
           resolve(relations)
