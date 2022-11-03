@@ -48,7 +48,7 @@ const PokeTeam: FC = (): JSX.Element => {
             )
           })
         }
-      {/* @ts-expect-error */}
+        {/* @ts-expect-error */}
       </masonry-rows>
     </div>
   )
