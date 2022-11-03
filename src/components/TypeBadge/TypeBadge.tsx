@@ -34,7 +34,7 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, big = false, stab = false }): J
     const numberText = number.toString()
 
     if (numberText === '0') return numberText
-    if (numberText.includes('0')) return numberText.slice(1)
+    if (numberText.includes('0')) return numberText.substring(1, 3)
     return numberText
   }
 

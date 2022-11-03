@@ -44,6 +44,7 @@
     font-size: 0.8em;
     border-radius: 1em;
     position: absolute;
+    letter-spacing: -0.1rem;
   }
 
   .strength {
