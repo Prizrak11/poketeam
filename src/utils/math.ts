@@ -7,3 +7,5 @@ export const getFraction = (decimal: number): string => {
 }
 
 export const multiplyArray = (value: number[] | number): number => Array.isArray(value) ? value.reduce((a, b) => a * b) : value
+
+export const average = (arr: number[]): number => arr.reduce((a, b) => a + b) / arr.length

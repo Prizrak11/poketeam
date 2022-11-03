@@ -1,6 +1,11 @@
 import { EffectsAPI } from './abilities'
-import { Pokemon } from './pokemon'
 import { PokemonType, pokemonTypes, pokemonTypesNames } from './pokemonTypes'
+
+export enum DamageClass {
+  STATUS = 'status',
+  PHYSICAL = 'physical',
+  SPECIAL = 'special'
+}
 
 export interface MoveAPI {
   accuracy: number
@@ -11,12 +16,14 @@ export interface MoveAPI {
   priority: number
   effect_chance: number
   effect_entries: EffectsAPI[]
+  damage_class: { name: DamageClass }
 }
 
 export interface PokemonMove {
   accuracy: number
   type: PokemonType
   name: string
+  classType: DamageClass
   stab: number
   power: number
   pp: number
@@ -24,20 +31,13 @@ export interface PokemonMove {
   effect: string | undefined
 }
 
-export const addStab = (move: PokemonMove, pokemon: Pokemon): PokemonMove => {
-  const types = pokemon.types.map(({ name }) => name)
-
-  if (types.includes(move.type.name)) return { ...move, stab: 1.5 }
-
-  return move
-}
-
 export const fromApiToMove = (move: MoveAPI): PokemonMove => {
-  const { name, type, effect_entries: effectsAPI, effect_chance: chance } = move
+  const { name, type, effect_entries: effectsAPI, effect_chance: chance, damage_class: classAPI } = move
 
   return {
     ...move,
     stab: 1,
+    classType: classAPI.name,
     name: name.replaceAll('-', ' '),
     type: pokemonTypes.get(type.name),
     effect: effectsAPI

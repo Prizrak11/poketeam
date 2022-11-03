@@ -5,6 +5,8 @@ import { searchItemAPI } from 'types/searchItem'
 import styles from './PokemonMoves.module.css'
 import useMoveSearchModal from 'hooks/modals/useMoveSearchModal'
 import MoveCard from 'components/MoveCard/MoveCard'
+import useAttacker from 'hooks/useAttacker'
+import { calculatePower } from 'utils/pokemonMoves'
 
 interface PokemonMovesProps {
   pokemon: Pokemon
@@ -14,6 +16,7 @@ interface PokemonMovesProps {
 const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false }): JSX.Element => {
   const { addMoveToPokemon } = useMove()
   const { openModal } = useMoveSearchModal()
+  const { attacker } = useAttacker()
 
   const isFullMoves = pokemon.moves.length === 4
 
@@ -25,7 +28,14 @@ const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false }): JSX.Ele
     <section className={`${styles.container} ${open ? styles.open : ''}`}>
       <>
         {
-          pokemon.moves.map((move, id) => <MoveCard key={id} move={move} open={open} />)
+          pokemon.moves.map((move, id) => (
+            <MoveCard
+              key={id}
+              move={move}
+              open={open}
+              power={calculatePower(move, pokemon, attacker)}
+            />
+          ))
         }
         {open && !isFullMoves && <button className={styles.addBtn} onClick={openAndAddMove}>Add move</button>}
       </>

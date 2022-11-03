@@ -38,6 +38,11 @@ export interface Pokemon {
   number: number
   sprite: string
   speed: number
+  hp: number
+  attack: number
+  specialAttack: number
+  defense: number
+  specialDefense: number
   abilities: PokemonAbilitie[]
   weaknessByType: weaknessByType
   moves: PokemonMove[]
@@ -62,7 +67,12 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
     id: crypto.randomUUID(),
     types: types.map(({ type }) => pokemonTypes.get(type.name)),
     number: order,
+    hp: getStat(stats, 'hp'),
     speed: getStat(stats, 'speed'),
+    attack: getStat(stats, 'attack'),
+    specialAttack: getStat(stats, 'special-attack'),
+    defense: getStat(stats, 'defense'),
+    specialDefense: getStat(stats, 'special-defense'),
     sprite: getSprites(sprites),
     abilities: [],
     weaknessByType: structuredClone(initialWeaknewssByTpe),

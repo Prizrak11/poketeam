@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useAppContext } from 'context/AppContext'
 import { Pokemon } from 'types/pokemon'
 import { getMove } from 'services/getMoves'
-import { addStab, PokemonMove } from 'types/moves'
+import { PokemonMove } from 'types/moves'
 import { Actions } from 'context/reducer'
 import { searchItemAPI } from 'types/searchItem'
+import { addStab } from 'utils/pokemonMoves'
 
 interface IuseMove {
   loading: boolean

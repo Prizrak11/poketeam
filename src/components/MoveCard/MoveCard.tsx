@@ -13,9 +13,10 @@ import styles from './MoveCard.module.css'
 interface MoveCardProps {
   move: PokemonMove
   open?: boolean
+  power: number
 }
 
-const MoveCard: FC<MoveCardProps> = ({ move, open = false }): JSX.Element => {
+const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element => {
   const { attacker } = useAttacker()
 
   const weak = attacker?.weaknessByType[move.type.name].from ?? 1
@@ -34,6 +35,9 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false }): JSX.Element => {
     ${open ? styles.open : ''}
     ${String(weak * move.stab).length > 1 ? styles.weak : ''}
     `
+  const powerTip = power === move.power || attacker == null
+    ? 'Power'
+    : `${power >= 100 ? 'KO' : ''} ${power}% of ${attacker?.name} life`
 
   return (
     <section className={sectionClass}>
@@ -42,13 +46,13 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false }): JSX.Element => {
       <div className={styles.badge} data-tip={getTip(move.type, attacker, weak)}>
         <TypeBadge type={move.type} weak={{ to: weak * move.stab }} big={open} stab={Boolean(move.stab > 1)} />
       </div>
-      <p data-tip={move.effect} className={styles.title}>{move.name}</p>
+      <p data-tip={!open ? move.effect : ''} className={styles.title}>{move.name}</p>
       <section className={styles.info}>
         {
           move.power != null && (
-            <div data-tip='Power' className={styles.value}>
+            <div data-tip={powerTip} className={`${styles.value} ${power >= 100 ? styles.ko : ''}`}>
               <FaFistRaised />
-              <p>{move.power}</p>
+              <p>{power !== move.power ? `~${power}%` : move.power}</p>
             </div>
           )
         }
@@ -69,6 +73,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false }): JSX.Element => {
           )
         }
       </section>
+      {open && <p className={styles.description}>{move.effect}</p>}
     </section>
   )
 }

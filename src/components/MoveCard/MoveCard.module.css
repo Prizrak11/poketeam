@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  justify-items: center;
   column-gap: 1rem;
   row-gap: 0.5rem;
   font-size: 0.6rem;
@@ -25,15 +26,26 @@
 
   .info {
     display: flex;
+    justify-content: space-around;
+    align-items: center;
     column-gap: 1rem;
 
     .value {
-      svg {
-        font-size: 0.7rem;
-      }
+      font-size: 0.5rem;
+      column-gap: 0.1rem;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      svg {
+        font-size: 0.7rem;
+      }
+
+      &.ko {
+        svg {
+          color: rgb(208, 52, 52);
+        }
+      }
     }
   }
 
@@ -43,6 +55,21 @@
 
   &.open {
     padding-top: 1rem;
+    row-gap: 1rem;
+    grid-template-columns: auto 1fr 1fr;
+
+    .description {
+      grid-column: span 3;
+      justify-self: normal;
+    }
+
+    .badge {
+      grid-row: auto;
+    }
+
+    .value {
+      font-size: 0.7rem;
+    }
   }
 
   .tooltip {
