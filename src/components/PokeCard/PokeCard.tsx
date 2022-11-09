@@ -1,13 +1,12 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import TypeBadge from 'components/TypeBadge/TypeBadge'
 import styles from './PokeCard.module.css'
 import PokeCardContainer, { CardContainerProps } from './PokeCardContainer'
 import useAttacker from 'hooks/useAttacker'
 import Spinner from 'components/Spinner/Spinner'
-import { Pokemon } from 'types/pokemon'
-import { PokemonType } from 'types/pokemonTypes'
-import ReactToolTip from 'react-tooltip'
 import PokemonMoves from 'components/PokemonMoves/PokemonMoves'
+import { getTypeTip } from 'utils/tooltip'
+import { getStength } from 'utils/pokemon'
 
 interface PokeCardProps extends Omit<CardContainerProps, 'children' | 'className'> {
   open?: boolean
@@ -16,32 +15,33 @@ interface PokeCardProps extends Omit<CardContainerProps, 'children' | 'className
 const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
   const { attacker, loading } = useAttacker()
   const { pokemon, open = false } = props
+  const [typesTooltip, setTypesTooltip] = useState<string[]>()
 
-  const getTip = (type: PokemonType, attacker?: Pokemon, from?: number): string => {
-    if (open && (from == null || from === 1)) return ''
-    if (attacker == null || from == null || from === 1) return type.name
-    if (from === 0) return `${attacker?.name} doesn't affect ${type.name}`
-    return `${attacker?.name} hits x${from} to ${type.name}`
-  }
+  useEffect(() => {
+    const tooltips = pokemon.types.map(type => {
+      const from = getStength(attacker, type)
+      return getTypeTip(type, attacker, from)
+    })
+
+    setTypesTooltip(tooltips)
+  }, [attacker, open])
 
   const typeColor = pokemon.types[0].color
 
-  if (loading) return <Spinner />
+  if (loading || pokemon == null || typesTooltip == null) return <Spinner />
   return (
     <PokeCardContainer {...props} className={`${styles.card} ${open ? styles.open : ''}`}>
       <>
-        <ReactToolTip className={styles.tooltip} id='tooltip' />
         <p className={styles.number} style={{ color: typeColor }}>{pokemon.number}</p>
         <img src={pokemon.sprite} className={styles.sprite} />
         <section className={styles.content}>
           <h1>{pokemon.name}</h1>
           <div className={styles.types}>
             {pokemon.types.map((type, id) => {
-              const from = attacker?.weaknessByType[type.name].to
+              const from = getStength(attacker, type)
+
               return (
-                <div key={id} data-tip={getTip(type, attacker, from)} data-for='tooltip'>
-                  <TypeBadge type={type} weak={{ from }} big={open} />
-                </div>
+                <TypeBadge tooltip={typesTooltip[id]} key={id} type={type} weak={{ from }} big={open} />
               )
             })}
           </div>

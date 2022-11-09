@@ -1,0 +1,11 @@
+.tippy-box[data-theme~='custom'] {
+  font-size: 0.5rem;
+  text-transform: capitalize;
+  background-color: rgba(34, 34, 34, 0.8);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.tippy-box[data-theme~='custom'] > .tippy-svg-arrow {
+  fill: rgba(34, 34, 34, 0.8);
+}

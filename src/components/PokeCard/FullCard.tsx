@@ -3,6 +3,7 @@ import TypeBadge from 'components/TypeBadge/TypeBadge'
 import PokeCardContainer, { CardContainerProps } from './PokeCardContainer'
 import styles from './PokeCard.module.css'
 import { pokemonTypes, pokemonTypesNames } from 'types/pokemonTypes'
+import { getTypeTip } from 'utils/tooltip'
 
 type FullPokeCardProps = Omit<CardContainerProps, 'children' | 'className'>
 
@@ -17,7 +18,7 @@ const FullPokeCard: FC<FullPokeCardProps> = (props): JSX.Element => {
           <section className={styles.content}>
             <h1>{pokemon.name}</h1>
             <div className={styles.types}>
-              {pokemon.types.map((type, id) => <TypeBadge key={id} type={type} />)}
+              {pokemon.types.map((type, id) => <TypeBadge key={id} type={type} tooltip={type.name} />)}
             </div>
           </section>
         </div>
@@ -26,7 +27,17 @@ const FullPokeCard: FC<FullPokeCardProps> = (props): JSX.Element => {
             .filter(([_, { from, to }]) => from !== 1 || to !== 1)
             .map(([type, values], id) => {
               const pokeType = pokemonTypes.get(type as pokemonTypesNames)
-              return <TypeBadge key={id} type={pokeType} weak={{ ...values }} />
+              const hasStab = pokemon.types.map(({ name }) => name).includes(pokeType.name)
+
+              return (
+                <TypeBadge
+                  key={id}
+                  type={pokeType}
+                  weak={{ ...values }}
+                  tooltip={getTypeTip(pokeType)}
+                  stab={hasStab}
+                />
+              )
             }
             )}
         </div>

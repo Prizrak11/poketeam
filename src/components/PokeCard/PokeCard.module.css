@@ -1,15 +1,10 @@
 @import "/src/variables.css";
 @import "/src/mixins/card.module.css";
-@import "/src/mixins/tooltip.module.css";
 
 .card,
 .fullCard {
   position: relative;
   color: black;
-
-  .tooltip {
-    @mixin tooltip;
-  }
 
   .background {
     @mixin card;

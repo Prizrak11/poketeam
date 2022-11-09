@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import useTooltip from 'hooks/useTooltip'
+import { FC, useEffect } from 'react'
 import { PokemonType } from 'types/pokemonTypes'
 import styles from './TypeBadge.module.css'
 
@@ -7,10 +8,18 @@ interface BadgeProps {
   weak?: { from?: number, to?: number }
   big?: boolean
   stab?: boolean
+  tooltip: string
 }
 
-const TypeBadge: FC<BadgeProps> = ({ type, weak, big = false, stab = false }): JSX.Element => {
+const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = false }): JSX.Element => {
+  const { ref, update, unmount } = useTooltip(tooltip)
   const { color, name, icon } = type
+
+  useEffect(() => {
+    update(tooltip)
+
+    return () => unmount()
+  }, [tooltip])
 
   const COLORS = {
     highest: '#1A8828',
@@ -46,7 +55,7 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, big = false, stab = false }): J
   }
 
   return (
-    <div style={{ color }} className={`${styles.badge} ${big ? styles.big : ''}`}>
+    <div ref={ref} style={{ color }} className={`${styles.badge} ${big ? styles.big : ''}`}>
       <div style={{ backgroundColor: color }} className={styles.background} />
       {
          big ? <p>{name}</p> : <img src={icon} alt={name} className={styles.icon} />
