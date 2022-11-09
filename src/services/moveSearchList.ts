@@ -1,3 +1,4 @@
+import { sanitizeItem } from './../types/searchItem'
 import { searchItemAPI } from 'types/searchItem'
 import { POKE_API } from '../consts'
 
@@ -11,7 +12,8 @@ export const moveSearchList = async (): Promise<searchItemAPI[]> => {
     } else {
       fetch(`${POKE_API}move?limit=2000&lang=es`)
         .then(async data => await data.json())
-        .then(({ results }) => {
+        .then(({ results }) => results.map(sanitizeItem))
+        .then(results => {
           localStorage.setItem(localKey, JSON.stringify(results))
           resolve(results)
         })
