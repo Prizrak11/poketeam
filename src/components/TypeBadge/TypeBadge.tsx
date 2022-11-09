@@ -12,21 +12,28 @@ interface BadgeProps {
 const TypeBadge: FC<BadgeProps> = ({ type, weak, big = false, stab = false }): JSX.Element => {
   const { color, name, icon } = type
 
+  const COLORS = {
+    highest: '#1A8828',
+    high: '#64AD62',
+    mid: 'gray',
+    low: '#9f3737',
+    lowest: '#bf4040'
+  }
+
   const effectiveNessColor: { [key: number]: string[] } = {
-    6: ['#1A8828', '#bf4040'],
-    4: ['#1A8828', '#bf4040'],
-    3: ['#64AD62', '#963232'],
-    2: ['#64AD62', '#963232'],
-    1.5: ['#64AD62', '#963232'],
-    0: ['gray', 'gray'],
-    0.75: ['#9f3737', '#64AD62'],
-    0.5: ['#9f3737', '#64AD62'],
-    0.375: ['#bf4040', '#1A8828'],
-    0.25: ['#bf4040', '#1A8828']
+    6: [COLORS.highest, COLORS.lowest],
+    4: [COLORS.highest, COLORS.lowest],
+    3: [COLORS.high, COLORS.low],
+    2: [COLORS.high, COLORS.low],
+    1.5: [COLORS.high, COLORS.low],
+    0: [COLORS.mid, COLORS.mid],
+    0.75: [COLORS.low, COLORS.high],
+    0.5: [COLORS.low, COLORS.high],
+    0.375: [COLORS.lowest, COLORS.highest],
+    0.25: [COLORS.lowest, COLORS.highest]
   }
 
   const side = (value: number, invert?: boolean): string => {
-    if (value === 0) return 'gray'
     return invert == null ? effectiveNessColor[value]?.[0] : effectiveNessColor[value]?.[1]
   }
 
