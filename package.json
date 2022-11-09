@@ -29,6 +29,9 @@
     "vite": "^3.1.0"
   },
   "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
     "extends": [
       "./node_modules/ts-standard/eslintrc.json"
     ]
