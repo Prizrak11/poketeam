@@ -1,8 +1,9 @@
-import { KeyboardEventHandler, useState, useRef, forwardRef, useImperativeHandle } from 'react'
+import { KeyboardEventHandler, useState, useRef, forwardRef, useImperativeHandle, useEffect } from 'react'
 import styles from './SearchInput.module.css'
 import Spinner from 'components/Spinner/Spinner'
 import { useSearchReturn } from 'hooks/search/useSearch'
 import { searchFuncType } from 'hooks/modals/useSearchModal'
+import { searchItemAPI } from 'types/searchItem'
 
 interface searchInputProps {
   onOptionClick: searchFuncType
@@ -25,14 +26,29 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
   const [keyFocus, setKeyFocus] = useState<number>(0)
   const buttonArr = useRef<Array<HTMLButtonElement | null>>([])
 
+  const scrollToRef = (num:number):void => {
+    buttonArr.current.at(num)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+  
+
+  const clickOption = (query: searchItemAPI) => {
+    onOptionClick(query)
+    clearInput()
+  }
+
+  useEffect(()=> {
+    setKeyFocus(0)
+    scrollToRef(0)
+  }, [list])
+
   const handleArrows: KeyboardEventHandler<HTMLInputElement> = evt => {
     if (list == null) return
 
     if (evt.key === 'ArrowUp' && keyFocus > 0) setKeyFocus(key => key - 1)
     if (evt.key === 'ArrowDown' && keyFocus < list.length - 1) setKeyFocus(key => key + 1)
-    if (evt.key === 'Enter') onOptionClick(list[keyFocus])
+    if (evt.key === 'Enter') clickOption(list[keyFocus])
 
-    if (keyFocus !== 0) buttonArr.current.at(keyFocus - 1)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (keyFocus !== 0) scrollToRef(keyFocus - 1)
   }
 
   useImperativeHandle(forwardedRef, () => ({ clearInput }))
@@ -61,7 +77,7 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
                 ref={ref => { buttonArr.current[id] = ref }}
                 key={id}
                 className={fStyles}
-                onClick={() => onOptionClick(option)}
+                onClick={() => clickOption(option)}
               >{option.name}
               </button>
             )
