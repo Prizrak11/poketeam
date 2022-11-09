@@ -12,13 +12,11 @@ interface BadgeProps {
 }
 
 const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = false }): JSX.Element => {
-  const { ref, update, unmount } = useTooltip(tooltip)
+  const { ref, update } = useTooltip(tooltip)
   const { color, name, icon } = type
 
   useEffect(() => {
     update(tooltip)
-
-    return () => unmount()
   }, [tooltip])
 
   const COLORS = {
@@ -29,7 +27,7 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = fa
     lowest: '#bf4040'
   }
 
-  const effectiveNessColor: { [key: number]: string[] } = {
+  const effectivenessColor: { [key: number]: string[] } = {
     6: [COLORS.highest, COLORS.lowest],
     4: [COLORS.highest, COLORS.lowest],
     3: [COLORS.high, COLORS.low],
@@ -43,7 +41,7 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = fa
   }
 
   const side = (value: number, invert?: boolean): string => {
-    return invert == null ? effectiveNessColor[value]?.[0] : effectiveNessColor[value]?.[1]
+    return invert == null ? effectivenessColor[value]?.[0] : effectivenessColor[value]?.[1]
   }
 
   const removeCero = (number: number): string => {

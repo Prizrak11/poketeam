@@ -1,7 +1,7 @@
 import TypeBadge from 'components/TypeBadge/TypeBadge'
 import useAttacker from 'hooks/useAttacker'
 import useTooltip from 'hooks/useTooltip'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { FaFistRaised } from 'react-icons/fa'
 import { FiTarget } from 'react-icons/fi'
 import { TbArrowBigUpLine } from 'react-icons/tb'
@@ -18,9 +18,9 @@ interface MoveCardProps {
 
 const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element => {
   const { attacker } = useAttacker()
-
   const weak = getWeak(attacker, move.type)
 
+  const [badgeTooltip, setBadgeTooltip] = useState(getMoveTip(move, power, attacker))
   const { ref: effectRef, update: updateEffect } = useTooltip(move.effect ?? move.name)
   const { ref: powerRef, update: updatePower } = useTooltip(String(move.power))
   const { ref: accuracyRef } = useTooltip('Accuracy')
@@ -36,6 +36,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
   const weakType = power !== 0 ? weak * move.stab : 1
 
   useEffect(() => {
+    setBadgeTooltip(getMoveTip(move, power, attacker))
     updateEffect((!open && move?.effect != null) ? move.effect : null)
     updatePower(
       power === move.power || attacker == null
@@ -51,7 +52,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
         <TypeBadge
           type={move.type}
           weak={{ to: weakType }}
-          tooltip={getMoveTip(move, power, attacker)}
+          tooltip={badgeTooltip}
           big={open}
           stab={hasStab}
         />
