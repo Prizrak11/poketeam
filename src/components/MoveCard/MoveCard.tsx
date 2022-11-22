@@ -26,9 +26,6 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
     ${String(weak * move.stab).length > 1 ? styles.weak : ''}
     `
 
-  const hasStab = power !== 0 ? Boolean(move.stab > 1) : false
-  const weakType = power !== 0 ? weak * move.stab : 1
-
   const getPowerTip = (): string => power === move.power || attacker == null
     ? 'Power'
     : `${power >= 100 ? 'KO' : ''} ${power}% of ${attacker?.name} life`
@@ -41,10 +38,10 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
       <div className={styles.badge}>
         <TypeBadge
           type={move.type}
-          weak={{ to: weakType }}
+          weak={{ to: weak * move.stab }}
           big={open}
           tooltip={getMoveTip(move, power, attacker)}
-          stab={hasStab}
+          stab={Boolean(move.stab > 1)}
         />
       </div>
       <Tooltip content={getEffectTip()}>

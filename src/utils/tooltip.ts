@@ -20,8 +20,8 @@ export const getTypeTip = (type: PokemonType, attacker?: Pokemon, value?: number
   if (attacker == null || value == null || value === 1) return type.name
   return affectTip({
     value,
-    from: type.name,
-    to: attacker.name
+    from: attacker.name,
+    to: type.name
   })
 }
 
@@ -29,8 +29,8 @@ export const getMoveTip = (move: PokemonMove, power: number, attacker?: Pokemon)
   const value = getWeak(attacker, move.type)
   const { type, stab } = move
 
-  if (stab > 1 && (attacker == null && move.power === power)) return `${type.name} has STAB`
-  if (attacker == null || value == null || power === 0) return type.name
+  if (stab > 1 && attacker == null) return `${type.name} has STAB`
+  if (attacker == null || value == null) return type.name
   return affectTip({
     value,
     from: type.name,
