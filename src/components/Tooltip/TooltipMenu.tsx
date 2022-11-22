@@ -24,6 +24,7 @@ const TooltipMenu: FC<Props> = ({ menu, className }): JSX.Element => {
             const handler: MouseEventHandler = (event): void => {
               event.preventDefault()
               action()
+              hide()
             }
 
             return (
