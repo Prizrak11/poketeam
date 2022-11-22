@@ -1,7 +1,7 @@
+import Tooltip from 'components/Tooltip/Tooltip'
 import TypeBadge from 'components/TypeBadge/TypeBadge'
 import useAttacker from 'hooks/useAttacker'
-import useTooltip from 'hooks/useTooltip'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { FaFistRaised } from 'react-icons/fa'
 import { FiTarget } from 'react-icons/fi'
 import { TbArrowBigUpLine } from 'react-icons/tb'
@@ -20,12 +20,6 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
   const { attacker } = useAttacker()
   const weak = getWeak(attacker, move.type)
 
-  const [badgeTooltip, setBadgeTooltip] = useState(getMoveTip(move, power, attacker))
-  const { ref: effectRef, update: updateEffect } = useTooltip(move.effect ?? move.name)
-  const { ref: powerRef, update: updatePower } = useTooltip(String(move.power))
-  const { ref: accuracyRef } = useTooltip('Accuracy')
-  const { ref: priorityRef } = useTooltip('Priority')
-
   const sectionClass = `
     ${styles.container} 
     ${open ? styles.open : ''}
@@ -35,15 +29,11 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
   const hasStab = power !== 0 ? Boolean(move.stab > 1) : false
   const weakType = power !== 0 ? weak * move.stab : 1
 
-  useEffect(() => {
-    setBadgeTooltip(getMoveTip(move, power, attacker))
-    updateEffect((!open && move?.effect != null) ? move.effect : null)
-    updatePower(
-      power === move.power || attacker == null
-        ? 'Power'
-        : `${power >= 100 ? 'KO' : ''} ${power}% of ${attacker?.name} life`
-    )
-  }, [move, power, open])
+  const getPowerTip = (): string => power === move.power || attacker == null
+    ? 'Power'
+    : `${power >= 100 ? 'KO' : ''} ${power}% of ${attacker?.name} life`
+
+  const getEffectTip = (): string | undefined => (!open && move?.effect != null) ? move.effect : undefined
 
   return (
     <section className={sectionClass}>
@@ -52,35 +42,43 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
         <TypeBadge
           type={move.type}
           weak={{ to: weakType }}
-          tooltip={badgeTooltip}
           big={open}
+          tooltip={getMoveTip(move, power, attacker)}
           stab={hasStab}
         />
       </div>
-      <p ref={effectRef} className={styles.title}>{move.name}</p>
+      <Tooltip content={getEffectTip()}>
+        <p className={styles.title}>{move.name}</p>
+      </Tooltip>
       <section className={styles.info}>
         {
           move.power != null && (
-            <div ref={powerRef} className={`${styles.value} ${power >= 100 ? styles.ko : ''}`}>
-              <FaFistRaised />
-              <p>{power !== move.power ? `~${power}%` : move.power}</p>
-            </div>
+            <Tooltip content={getPowerTip()}>
+              <div className={`${styles.value} ${power >= 100 ? styles.ko : ''}`}>
+                <FaFistRaised />
+                <p>{power !== move.power ? `~${power}%` : move.power}</p>
+              </div>
+            </Tooltip>
           )
         }
         {
           move.accuracy != null && (
-            <div ref={accuracyRef} className={styles.value}>
-              <FiTarget />
-              <p>{move.accuracy}</p>
-            </div>
+            <Tooltip content='Accuracy'>
+              <div className={styles.value}>
+                <FiTarget />
+                <p>{move.accuracy}</p>
+              </div>
+            </Tooltip>
           )
         }
         {
           move.priority != null && move.priority !== 0 && (
-            <div ref={priorityRef} className={styles.value}>
-              <TbArrowBigUpLine />
-              <p>{move.priority}</p>
-            </div>
+            <Tooltip content='Priority'>
+              <div className={styles.value}>
+                <TbArrowBigUpLine />
+                <p>{move.priority}</p>
+              </div>
+            </Tooltip>
           )
         }
       </section>

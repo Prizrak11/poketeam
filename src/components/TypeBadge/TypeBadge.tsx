@@ -1,5 +1,5 @@
-import useTooltip from 'hooks/useTooltip'
-import { FC, useEffect } from 'react'
+import Tooltip from 'components/Tooltip/Tooltip'
+import { FC } from 'react'
 import { PokemonType } from 'types/pokemonTypes'
 import styles from './TypeBadge.module.css'
 
@@ -8,16 +8,11 @@ interface BadgeProps {
   weak?: { from?: number, to?: number }
   big?: boolean
   stab?: boolean
-  tooltip: string
+  tooltip?: string
 }
 
 const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = false }): JSX.Element => {
-  const { ref, update } = useTooltip(tooltip)
   const { color, name, icon } = type
-
-  useEffect(() => {
-    update(tooltip)
-  }, [tooltip])
 
   const COLORS = {
     highest: '#1A8828',
@@ -53,27 +48,29 @@ const TypeBadge: FC<BadgeProps> = ({ type, weak, tooltip, big = false, stab = fa
   }
 
   return (
-    <div ref={ref} style={{ color }} className={`${styles.badge} ${big ? styles.big : ''}`}>
-      <div style={{ backgroundColor: color }} className={styles.background} />
-      {
-         big ? <p>{name}</p> : <img src={icon} alt={name} className={styles.icon} />
-      }
-      {
-        stab && <p className={styles.stab}>S</p>
-      }
-      {
-        (weak?.from != null) && (weak.from !== 1) &&
-          <span className={styles.weak} style={{ backgroundColor: side(weak.from, true) }}>
-            {removeCero(weak.from)}
-          </span>
-      }
-      {
-        (weak?.to != null) && (weak.to !== 1) &&
-          <span className={styles.strength} style={{ backgroundColor: side(weak.to) }}>
-            {removeCero(weak.to)}
-          </span>
-      }
-    </div>
+    <Tooltip content={tooltip}>
+      <div style={{ color }} className={`${styles.badge} ${big ? styles.big : ''}`}>
+        <div style={{ backgroundColor: color }} className={styles.background} />
+        {
+          big ? <p>{name}</p> : <img src={icon} alt={name} className={styles.icon} />
+        }
+        {
+          stab && <p className={styles.stab}>S</p>
+        }
+        {
+          (weak?.from != null) && (weak.from !== 1) &&
+            <span className={styles.weak} style={{ backgroundColor: side(weak.from, true) }}>
+              {removeCero(weak.from)}
+            </span>
+        }
+        {
+          (weak?.to != null) && (weak.to !== 1) &&
+            <span className={styles.strength} style={{ backgroundColor: side(weak.to) }}>
+              {removeCero(weak.to)}
+            </span>
+        }
+      </div>
+    </Tooltip>
   )
 }
 
