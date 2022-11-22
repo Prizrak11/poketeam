@@ -1,6 +1,12 @@
 .tooltip {
   font-size: 0.6rem !important;
   text-transform: capitalize;
+
+  &.big {
+    div {
+      padding: 0;
+    }
+  }
 }
 
 .action {
@@ -12,9 +18,19 @@
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+  padding-block: 0.5rem;
 
   .option {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
     button {
+      text-transform: capitalize;
+      padding-inline: 0.5rem;
       border: none;
       color: white;
       background: none;

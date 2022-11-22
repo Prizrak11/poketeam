@@ -3,8 +3,15 @@ import { FC, MouseEventHandler, useState } from 'react'
 import { TfiMenu } from 'react-icons/tfi'
 import styles from './tooltip.module.css'
 
+export interface MenuItem {
+  label: string
+  action: () => void
+  icon?: JSX.Element
+  error?: boolean
+}
+
 interface Props {
-  menu: Array<{ label: string, action: () => void, error?: boolean }>
+  menu: MenuItem[]
   className?: string
 }
 
@@ -19,7 +26,7 @@ const TooltipMenu: FC<Props> = ({ menu, className }): JSX.Element => {
       <ul className={styles.menu}>
         {
           menu.map((option, id) => {
-            const { action, label, error = false } = option
+            const { action, label, error = false, icon: Icon } = option
 
             const handler: MouseEventHandler = (event): void => {
               event.preventDefault()
@@ -32,7 +39,7 @@ const TooltipMenu: FC<Props> = ({ menu, className }): JSX.Element => {
                 key={id}
                 className={`${styles.option} ${error ? styles.error : ''}`}
               >
-                <button onClick={handler}>{label}</button>
+                <button onClick={handler}>{Icon != null && Icon}{label}</button>
               </li>
             )
           })
@@ -49,7 +56,7 @@ const TooltipMenu: FC<Props> = ({ menu, className }): JSX.Element => {
       visible={open}
       zIndex={99}
       onClickOutside={hide}
-      className={styles.tooltip}
+      className={`${styles.tooltip} ${styles.big}`}
     >
       <button onClick={open ? hide : show} className={`${styles.action} ${className ?? ''}`}>
         <TfiMenu />

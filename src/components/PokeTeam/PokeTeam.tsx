@@ -6,10 +6,12 @@ import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import { usePokemonSearchModal } from 'hooks/modals'
 import 'masonry-rows'
-import { MenuItem } from 'components/PokeCard/PokeCardContainer'
 import useMoveSearchModal from 'hooks/modals/useMoveSearchModal'
 import useMove from 'hooks/useMove'
 import { searchItemAPI } from 'types/searchItem'
+import { MenuItem } from 'components/Tooltip/TooltipMenu'
+import { FaTrash } from 'react-icons/fa'
+import { AiOutlineAppstoreAdd, AiOutlineEdit } from 'react-icons/ai'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
@@ -47,9 +49,9 @@ const PokeTeam: FC = (): JSX.Element => {
             const addMove = (move: searchItemAPI): void => addMoveToPokemon(move, pokemon)
 
             const menu: MenuItem[] = [
-              { label: 'Remove', action: () => removePokemonFromTeam(pokemon), error: true },
-              { label: 'Add Move', action: () => openMoveModal(addMove) },
-              { label: 'Edit', action: () => setCurrentEditable(id) }
+              { icon: <FaTrash />, label: 'Remove', action: () => removePokemonFromTeam(pokemon), error: true },
+              { icon: <AiOutlineAppstoreAdd />, label: 'Add Move', action: () => openMoveModal(addMove) },
+              { icon: <AiOutlineEdit />, label: 'Edit', action: () => setCurrentEditable(id) }
             ]
 
             return (

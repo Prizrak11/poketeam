@@ -1,13 +1,7 @@
-import TooltipMenu from 'components/Tooltip/TooltipMenu'
+import TooltipMenu, { MenuItem } from 'components/Tooltip/TooltipMenu'
 import { FC } from 'react'
 import { Pokemon } from 'types/pokemon'
 import styles from './PokeCard.module.css'
-
-export interface MenuItem {
-  label: string
-  action: () => void
-  error?: boolean
-}
 
 export interface CardContainerProps {
   pokemon: Pokemon
