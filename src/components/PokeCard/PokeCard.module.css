@@ -13,8 +13,6 @@
   }
 
   &:hover:not(.open) {
-    cursor: pointer;
-
     .background {
       filter: var(--card-filters) opacity(0.9);
     }

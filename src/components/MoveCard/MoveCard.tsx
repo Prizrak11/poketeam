@@ -4,6 +4,7 @@ import useAttacker from 'hooks/useAttacker'
 import { FC } from 'react'
 import { FaFistRaised } from 'react-icons/fa'
 import { FiTarget } from 'react-icons/fi'
+import { IoIosClose } from 'react-icons/io'
 import { TbArrowBigUpLine } from 'react-icons/tb'
 import { PokemonMove } from 'types/moves'
 import { getWeak } from 'utils/pokemon'
@@ -14,9 +15,10 @@ interface MoveCardProps {
   move: PokemonMove
   open?: boolean
   power: number
+  remove?: (move: PokemonMove) => void
 }
 
-const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element => {
+const MoveCard: FC<MoveCardProps> = ({ move, open = false, power, remove }): JSX.Element => {
   const { attacker } = useAttacker()
   const weak = getWeak(attacker, move.type)
 
@@ -35,6 +37,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
   return (
     <section className={sectionClass}>
       <div className={styles.background} />
+      {remove != null && <button className={styles.removeBtn} onClick={() => remove(move)}><IoIosClose /></button>}
       <div className={styles.badge}>
         <TypeBadge
           type={move.type}
@@ -51,7 +54,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
         {
           move.power != null && (
             <Tooltip content={getPowerTip()}>
-              <div className={`${styles.value} ${power >= 100 ? styles.ko : ''}`}>
+              <div className={`${styles.value} ${power >= 100 && attacker != null ? styles.ko : ''}`}>
                 <FaFistRaised />
                 <p>{power !== move.power ? `~${power}%` : move.power}</p>
               </div>
@@ -73,7 +76,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power }): JSX.Element
             <Tooltip content='Priority'>
               <div className={styles.value}>
                 <TbArrowBigUpLine />
-                <p>{move.priority}</p>
+                <p>+{move.priority}</p>
               </div>
             </Tooltip>
           )

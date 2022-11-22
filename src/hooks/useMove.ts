@@ -10,6 +10,7 @@ import { addStab } from 'utils/pokemonMoves'
 interface IuseMove {
   loading: boolean
   addMoveToPokemon: (move: searchItemAPI, pokemon: Pokemon) => void
+  removeMoveFromPokemon: (move: PokemonMove, pokemon: Pokemon) => void
 }
 
 const useMove = (): IuseMove => {
@@ -32,8 +33,18 @@ const useMove = (): IuseMove => {
       .catch((error: Error) => { throw new Error(`Failed to load move ${pokemon.name}: ${error.message}`) })
   }
 
+  const removeMoveFromPokemon = (move: PokemonMove, pokemon: Pokemon): void => {
+    const selectedPokemon = pokemonTeam.find(({ id }) => id === pokemon.id)
+    if (selectedPokemon == null) throw new Error('Pokemon not found')
+
+    const filtered = pokemon.moves.filter(({ name }) => name !== move.name)
+
+    dispatch({ type: Actions.CHANGE_POKEMON_MOVES, payload: { pokemon, moves: filtered } })
+  }
+
   return {
     addMoveToPokemon,
+    removeMoveFromPokemon,
     loading
   }
 }

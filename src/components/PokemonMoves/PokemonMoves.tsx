@@ -7,6 +7,7 @@ import useMoveSearchModal from 'hooks/modals/useMoveSearchModal'
 import MoveCard from 'components/MoveCard/MoveCard'
 import useAttacker from 'hooks/useAttacker'
 import { calculatePower } from 'utils/pokemonMoves'
+import { PokemonMove } from 'types/moves'
 
 interface PokemonMovesProps {
   pokemon: Pokemon
@@ -15,13 +16,15 @@ interface PokemonMovesProps {
 }
 
 const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false, editable = false }): JSX.Element => {
-  const { addMoveToPokemon } = useMove()
+  const { addMoveToPokemon, removeMoveFromPokemon } = useMove()
   const { openModal } = useMoveSearchModal()
   const { attacker } = useAttacker()
 
   const isFullMoves = pokemon.moves.length === 4
 
   const addMove = (move: searchItemAPI): void => addMoveToPokemon(move, pokemon)
+
+  const remove = (move: PokemonMove): void => removeMoveFromPokemon(move, pokemon)
 
   const openAndAddMove = (): void => openModal(addMove)
 
@@ -35,6 +38,7 @@ const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false, editable =
               move={move}
               open={open}
               power={calculatePower(move, pokemon, attacker)}
+              remove={editable ? remove : undefined}
             />
           ))
         }
