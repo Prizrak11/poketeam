@@ -2,3 +2,41 @@
   font-size: 0.6rem !important;
   text-transform: capitalize;
 }
+
+.action {
+  border: none;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+
+  .option {
+    button {
+      border: none;
+      color: white;
+      background: none;
+      width: 100%;
+      text-align: start;
+      cursor: pointer;
+    }
+
+    &:hover {
+      button {
+        filter: brightness(50%);
+      }
+    }
+
+    &.error {
+      &:hover {
+        button {
+          color: red;
+          filter: brightness(80%);
+        }
+      }
+    }
+  }
+}
+

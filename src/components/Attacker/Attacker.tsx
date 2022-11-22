@@ -5,12 +5,17 @@ import useAttacker from 'hooks/useAttacker'
 import { usePokemonSearchModal } from 'hooks/modals'
 import { FC } from 'react'
 import styles from './Atacker.module.css'
+import { MenuItem } from 'components/PokeCard/PokeCardContainer'
 
 const Attacker: FC = (): JSX.Element => {
   const { loading, attacker, addPokemonToEnemyFromApi, removePokemonEnemy } = useAttacker()
   const { openModal } = usePokemonSearchModal()
 
   const openModalToAttacker = (): void => openModal(addPokemonToEnemyFromApi)
+
+  const menu: MenuItem[] = [
+    { label: 'Remove', action: removePokemonEnemy, error: true }
+  ]
 
   if (loading) return <Spinner />
   return (
@@ -19,7 +24,7 @@ const Attacker: FC = (): JSX.Element => {
       <section>
         {
           (attacker != null)
-            ? <FullPokeCard pokemon={attacker} remove={removePokemonEnemy} />
+            ? <FullPokeCard pokemon={attacker} menu={menu} />
             : <VoidCard action={openModalToAttacker} />
         }
       </section>

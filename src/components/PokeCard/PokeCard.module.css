@@ -20,9 +20,9 @@
     }
   }
 
-  .removeBtn {
+  .menu {
     position: absolute;
-    background-color: red;
+    background-color: gray;
     filter: opacity(0);
     padding: 0.5rem;
     right: -1em;
@@ -30,7 +30,7 @@
     transition: all ease-in-out 0.2s;
   }
 
-  &:hover .removeBtn {
+  &:hover .menu {
     cursor: pointer;
     filter: brightness(50%) opacity(85%);
     right: 0;

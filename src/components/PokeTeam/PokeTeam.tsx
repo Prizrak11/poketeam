@@ -6,14 +6,20 @@ import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import { usePokemonSearchModal } from 'hooks/modals'
 import 'masonry-rows'
+import { MenuItem } from 'components/PokeCard/PokeCardContainer'
+import useMoveSearchModal from 'hooks/modals/useMoveSearchModal'
+import useMove from 'hooks/useMove'
+import { searchItemAPI } from 'types/searchItem'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
-  const { openModal } = usePokemonSearchModal()
+  const { addMoveToPokemon } = useMove()
+  const { openModal: openPokemonModal } = usePokemonSearchModal()
+  const { openModal: openMoveModal } = useMoveSearchModal()
   const pokemonRefs = useRef<Array<HTMLDivElement | null>>([])
   const [currentOpen, setCurrentOpen] = useState<number>()
 
-  const openModalToTeam = (): void => openModal(addPokemonToTeamFromApi)
+  const openModalToTeam = (): void => openPokemonModal(addPokemonToTeamFromApi)
 
   useEffect(() => {
     if (currentOpen == null) return
@@ -37,13 +43,20 @@ const PokeTeam: FC = (): JSX.Element => {
         {
           pokemonTeam.map((pokemon, id) => {
             if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
+
+            const addMove = (move: searchItemAPI): void => addMoveToPokemon(move, pokemon)
+
+            const menu: MenuItem[] = [
+              { label: 'Remove', action: () => removePokemonFromTeam(pokemon), error: true },
+              { label: 'Add Move', action: () => openMoveModal(addMove) }
+            ]
+
             return (
               <div
                 key={id}
                 ref={ref => { pokemonRefs.current[id] = ref }}
-                onClick={() => setCurrentOpen(id)}
               >
-                <PokeCard pokemon={pokemon} remove={removePokemonFromTeam} open={currentOpen === id} />
+                <PokeCard pokemon={pokemon} menu={menu} open={currentOpen === id} />
               </div>
             )
           })

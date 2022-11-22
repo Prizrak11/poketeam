@@ -1,15 +1,22 @@
+import TooltipMenu from 'components/Tooltip/TooltipMenu'
 import { FC } from 'react'
 import { Pokemon } from 'types/pokemon'
 import styles from './PokeCard.module.css'
 
+export interface MenuItem {
+  label: string
+  action: () => void
+  error?: boolean
+}
+
 export interface CardContainerProps {
   pokemon: Pokemon
-  remove?: (pokemon: Pokemon) => void
+  menu: MenuItem[]
   children: JSX.Element
   className?: string
 }
 
-const PokeCardContainer: FC<CardContainerProps> = ({ pokemon, remove, className, children }): JSX.Element => {
+const PokeCardContainer: FC<CardContainerProps> = ({ pokemon, menu, className, children }): JSX.Element => {
   const typeColor = pokemon.types.length === 1
     ? pokemon.types[0].color
     : `linear-gradient(45deg,  
@@ -20,7 +27,7 @@ const PokeCardContainer: FC<CardContainerProps> = ({ pokemon, remove, className,
 
   return (
     <div className={`${className}`}>
-      {(remove != null) && <div onClick={() => remove(pokemon)} className={styles.removeBtn}>X</div>}
+      {(menu != null) && <TooltipMenu menu={menu} className={styles.menu} />}
       <div style={{ background: typeColor }} className={styles.background} />
       {children}
     </div>
