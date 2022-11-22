@@ -10,10 +10,11 @@ import { calculatePower } from 'utils/pokemonMoves'
 
 interface PokemonMovesProps {
   pokemon: Pokemon
+  editable?: boolean
   open?: boolean
 }
 
-const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false }): JSX.Element => {
+const PokemonMoves: FC<PokemonMovesProps> = ({ pokemon, open = false, editable = false }): JSX.Element => {
   const { addMoveToPokemon } = useMove()
   const { openModal } = useMoveSearchModal()
   const { attacker } = useAttacker()

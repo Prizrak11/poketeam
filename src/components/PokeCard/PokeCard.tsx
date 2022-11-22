@@ -10,11 +10,12 @@ import { getStength } from 'utils/pokemon'
 
 interface PokeCardProps extends Omit<CardContainerProps, 'children' | 'className'> {
   open?: boolean
+  editable?: boolean
 }
 
 const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
   const { attacker, loading } = useAttacker()
-  const { pokemon, open = false } = props
+  const { pokemon, open = false, editable = false } = props
   const [typesTooltip, setTypesTooltip] = useState<string[]>()
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
             })}
           </div>
         </section>
-        {(pokemon.moves.length > 0 || open) && <PokemonMoves pokemon={pokemon} open={open} />}
+        {(pokemon.moves.length > 0 || open) && <PokemonMoves editable={editable} pokemon={pokemon} open={open} />}
       </>
     </PokeCardContainer>
   )

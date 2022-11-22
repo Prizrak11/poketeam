@@ -17,22 +17,22 @@ const PokeTeam: FC = (): JSX.Element => {
   const { openModal: openPokemonModal } = usePokemonSearchModal()
   const { openModal: openMoveModal } = useMoveSearchModal()
   const pokemonRefs = useRef<Array<HTMLDivElement | null>>([])
-  const [currentOpen, setCurrentOpen] = useState<number>()
+  const [currentEditable, setCurrentEditable] = useState<number>()
 
   const openModalToTeam = (): void => openPokemonModal(addPokemonToTeamFromApi)
 
   useEffect(() => {
-    if (currentOpen == null) return
+    if (currentEditable == null) return
 
     const handleClickOutside = (evt: MouseEvent): void => {
-      const currentRef = pokemonRefs?.current.at(currentOpen)
-      if ((currentRef != null) && !currentRef.contains(evt.target as Node)) setCurrentOpen(undefined)
+      const currentRef = pokemonRefs?.current.at(currentEditable)
+      if ((currentRef != null) && !currentRef.contains(evt.target as Node)) setCurrentEditable(undefined)
     }
 
     document.addEventListener('click', handleClickOutside)
 
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [currentOpen])
+  }, [currentEditable])
 
   if (loading) return <Spinner />
   return (
@@ -48,7 +48,8 @@ const PokeTeam: FC = (): JSX.Element => {
 
             const menu: MenuItem[] = [
               { label: 'Remove', action: () => removePokemonFromTeam(pokemon), error: true },
-              { label: 'Add Move', action: () => openMoveModal(addMove) }
+              { label: 'Add Move', action: () => openMoveModal(addMove) },
+              { label: 'Edit', action: () => setCurrentEditable(id) }
             ]
 
             return (
@@ -56,7 +57,7 @@ const PokeTeam: FC = (): JSX.Element => {
                 key={id}
                 ref={ref => { pokemonRefs.current[id] = ref }}
               >
-                <PokeCard pokemon={pokemon} menu={menu} open={currentOpen === id} />
+                <PokeCard pokemon={pokemon} menu={menu} editable={currentEditable === id} />
               </div>
             )
           })
