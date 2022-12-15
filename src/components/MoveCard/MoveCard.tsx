@@ -10,6 +10,7 @@ import { PokemonMove } from 'types/moves'
 import { getWeak } from 'utils/pokemon'
 import { getMoveTip } from 'utils/tooltip'
 import styles from './MoveCard.module.css'
+import MoveProp from './MoveProp'
 
 interface MoveCardProps {
   move: PokemonMove
@@ -32,8 +33,6 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power, remove }): JSX
     ? 'Power'
     : `${power >= 100 ? 'KO' : ''} ${power}% of ${attacker?.name} life`
 
-  const getEffectTip = (): string | undefined => (!open && move?.effect != null) ? move.effect : undefined
-
   return (
     <section className={sectionClass}>
       <div className={styles.background} />
@@ -47,38 +46,28 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power, remove }): JSX
           stab={Boolean(move.stab > 1)}
         />
       </div>
-      <Tooltip content={getEffectTip()}>
+      <Tooltip content={!open ? move?.effect : undefined}>
         <p className={styles.title}>{move.name}</p>
       </Tooltip>
       <section className={styles.info}>
         {
           move.power != null && (
-            <Tooltip content={getPowerTip()}>
-              <div className={`${styles.value} ${power >= 100 && attacker != null ? styles.ko : ''}`}>
-                <FaFistRaised />
-                <p>{power !== move.power ? `~${power}%` : move.power}</p>
-              </div>
-            </Tooltip>
+            <MoveProp
+              content={power !== move.power ? `~${power}%` : `${move.power}`}
+              tooltip={getPowerTip()}
+              icon={<FaFistRaised />}
+              className={power >= 100 && attacker != null ? styles.ko : ''}
+            />
           )
         }
         {
           move.accuracy != null && (
-            <Tooltip content='Accuracy'>
-              <div className={styles.value}>
-                <FiTarget />
-                <p>{move.accuracy}</p>
-              </div>
-            </Tooltip>
+            <MoveProp content={`${move.accuracy}`} tooltip='Accuracy' icon={<FiTarget />} />
           )
         }
         {
           move.priority != null && move.priority !== 0 && (
-            <Tooltip content='Priority'>
-              <div className={styles.value}>
-                <TbArrowBigUpLine />
-                <p>+{move.priority}</p>
-              </div>
-            </Tooltip>
+            <MoveProp content={`${move.priority}`} tooltip='Priority' icon={<TbArrowBigUpLine />} />
           )
         }
       </section>
