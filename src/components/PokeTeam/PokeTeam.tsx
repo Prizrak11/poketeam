@@ -40,7 +40,6 @@ const PokeTeam: FC = (): JSX.Element => {
   return (
     <div>
       <h1 className={styles.title}>Your Team</h1>
-      {/* @ts-expect-error */}
       <masonry-rows gap='1rem'>
         {
           pokemonTeam.map((pokemon, id) => {
@@ -64,7 +63,6 @@ const PokeTeam: FC = (): JSX.Element => {
             )
           })
         }
-        {/* @ts-expect-error */}
       </masonry-rows>
     </div>
   )

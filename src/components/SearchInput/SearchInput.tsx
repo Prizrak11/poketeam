@@ -26,17 +26,16 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
   const [keyFocus, setKeyFocus] = useState<number>(0)
   const buttonArr = useRef<Array<HTMLButtonElement | null>>([])
 
-  const scrollToRef = (num:number):void => {
+  const scrollToRef = (num: number): void => {
     buttonArr.current.at(num)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
-  
 
-  const clickOption = (query: searchItemAPI) => {
+  const clickOption = (query: searchItemAPI): void => {
     onOptionClick(query)
     clearInput()
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     setKeyFocus(0)
     scrollToRef(0)
   }, [list])
