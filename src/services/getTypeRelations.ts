@@ -1,25 +1,20 @@
 import { POKE_API } from 'consts'
 import { TypeRelationsAPI } from 'types/types'
+import { getRelationByName, setRelations } from '../data/relations'
+import { pokemonTypesNames } from '../types/pokemonTypes'
 
-export const getTypeRelations = async (name: string): Promise<TypeRelationsAPI> => {
-  const localKey = 'relationTypes'
-  const localRelations = localStorage.getItem(localKey)
-  if (localRelations == null) localStorage.setItem(localKey, JSON.stringify({}))
-
-  const currentRelations = localRelations != null ? JSON.parse(localRelations) : {}
+export const getTypeRelations = async (name: pokemonTypesNames): Promise<TypeRelationsAPI> => {
+  const currentRelations = getRelationByName(name)
 
   return await new Promise((resolve, reject) => {
-    if (currentRelations[name] != null) {
-      resolve(currentRelations[name])
-    } else {
-      fetch(`${POKE_API}type/${name}`)
-        .then(async data => await data.json())
-        .then((relations: TypeRelationsAPI) => {
-          localStorage.setItem(localKey, JSON.stringify({ ...currentRelations, [name]: relations }))
+    if (currentRelations != null) resolve(currentRelations)
 
-          resolve(relations)
-        })
-        .catch(reject)
-    }
+    fetch(`${POKE_API}type/${name}`)
+      .then(async data => await data.json())
+      .then((relations: TypeRelationsAPI) => {
+        setRelations(relations, name)
+        resolve(relations)
+      })
+      .catch(reject)
   })
 }
