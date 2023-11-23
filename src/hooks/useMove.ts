@@ -7,13 +7,13 @@ import { Actions } from 'context/reducer'
 import { searchItemAPI } from 'types/searchItem'
 import { addStab } from 'utils/pokemonMoves'
 
-interface IuseMove {
+interface IUseMove {
   loading: boolean
   addMoveToPokemon: (move: searchItemAPI, pokemon: Pokemon) => void
   removeMoveFromPokemon: (move: PokemonMove, pokemon: Pokemon) => void
 }
 
-const useMove = (): IuseMove => {
+const useMove = (): IUseMove => {
   const { state: { pokemonTeam }, dispatch } = useAppContext()
   const [loading, setLoading] = useState(false)
 

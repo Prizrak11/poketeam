@@ -16,12 +16,12 @@ export type weaknessByType = {
   [T in pokemonTypesNames]: { to: number, from: number }
 }
 
-export const initialWeaknewssByTpe = Object
+export const initialWeaknessByTpe = Object
   .values(pokemonTypesNames)
   .reduce((last, current) => ({ ...last, [current]: { to: 1, from: 1 } }), {}) as weaknessByType
 
 export const unifyTypeRelations = (types: TypeRelationsAPI[]): weaknessByType => {
-  const typeRelations: weaknessByType = structuredClone(initialWeaknewssByTpe)
+  const typeRelations: weaknessByType = structuredClone(initialWeaknessByTpe)
 
   types.forEach(({ damage_relations: dR }) => {
     dR.double_damage_to?.forEach(({ name }) => { typeRelations[name].to *= 2 })

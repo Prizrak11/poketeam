@@ -5,18 +5,18 @@ export interface EffectsAPI {
   }
 }
 
-export interface AbilitieAPI {
+export interface AbilityAPI {
   effect_entries: EffectsAPI[]
   name: string
 }
 
-export interface PokemonAbilitie {
+export interface PokemonAbility {
   name: string
   shortEffect: string
 }
 
-export const transformApiToAbilitie = (abilitie: AbilitieAPI): PokemonAbilitie => {
-  const { name, effect_entries: effects } = abilitie
+export const transformApiToAbility = (ability: AbilityAPI): PokemonAbility => {
+  const { name, effect_entries: effects } = ability
 
   return {
     name,

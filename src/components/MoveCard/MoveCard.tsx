@@ -42,7 +42,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power, remove }): JSX
           type={move.type}
           weak={{ to: weak * move.stab }}
           big={open}
-          tooltip={getMoveTip(move, power, attacker)}
+          tooltip={getMoveTip(move, attacker)}
           stab={Boolean(move.stab > 1)}
         />
       </div>

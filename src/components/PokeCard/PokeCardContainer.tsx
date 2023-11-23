@@ -13,7 +13,7 @@ export interface CardContainerProps {
 const PokeCardContainer: FC<CardContainerProps> = ({ pokemon, menu, className, children }): JSX.Element => {
   const typeColor = pokemon.types.length === 1
     ? pokemon.types[0].color
-    : `linear-gradient(45deg,  
+    : `linear-gradient(45deg,
           ${pokemon.types[0].color} 50%,
           ${pokemon.types[1].color} 100%)`
 

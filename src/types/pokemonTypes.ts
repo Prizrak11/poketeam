@@ -3,7 +3,7 @@ import BugIcon from '../static/Bug_Type_Icon.svg'
 import DarkIcon from '../static/Dark_Type_Icon.svg'
 import DragonIcon from '../static/Dragon_Type_Icon.svg'
 import ElectricIcon from '../static/Electric_Type_Icon.svg'
-import FaityIcon from '../static/Fairy_Type_Icon.svg'
+import FairyIcon from '../static/Fairy_Type_Icon.svg'
 import FightIcon from '../static/Fighting_Type_Icon.svg'
 import FireIcon from '../static/Fire_Type_Icon.svg'
 import FlyingIcon from '../static/Flying_Type_Icon.svg'
@@ -44,7 +44,7 @@ export interface PokemonType {
   icon: string
 }
 
-interface IpokemonTypes {
+interface IPokemonTypes {
   get: <T extends pokemonTypesNames>(
     status: T
   ) => PokemonType
@@ -68,5 +68,5 @@ export const pokemonTypes = new Map([
   [pokemonTypesNames.ICE, { name: pokemonTypesNames.ICE, color: '#40CAB4', icon: IceIcon }],
   [pokemonTypesNames.DRAGON, { name: pokemonTypesNames.DRAGON, color: '#0B58BF', icon: DragonIcon }],
   [pokemonTypesNames.DARK, { name: pokemonTypesNames.DARK, color: '#484054', icon: DarkIcon }],
-  [pokemonTypesNames.FAIRY, { name: pokemonTypesNames.FAIRY, color: '#F76EE7', icon: FaityIcon }]
-]) as IpokemonTypes
+  [pokemonTypesNames.FAIRY, { name: pokemonTypesNames.FAIRY, color: '#F76EE7', icon: FairyIcon }]
+]) as IPokemonTypes

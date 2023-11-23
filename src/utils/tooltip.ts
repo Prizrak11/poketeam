@@ -25,7 +25,7 @@ export const getTypeTip = (type: PokemonType, attacker?: Pokemon, value?: number
   })
 }
 
-export const getMoveTip = (move: PokemonMove, power: number, attacker?: Pokemon): string => {
+export const getMoveTip = (move: PokemonMove, attacker?: Pokemon): string => {
   const value = getWeak(attacker, move.type)
   const { type, stab } = move
 

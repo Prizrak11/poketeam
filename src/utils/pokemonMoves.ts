@@ -25,7 +25,7 @@ export const calculatePower = (move: PokemonMove, pokemon: Pokemon, attacker?: P
   const MIN_ATK_MULTIPLIER = 0.85
   const MAX_ATK_MULTIPLIER = 1
 
-  const typeEfectiveness = attacker.weaknessByType[type].from
+  const typeEffectiveness = attacker.weaknessByType[type].from
 
   let [attack, defense] = classType === DamageClass.PHYSICAL
     ? [pokemon.attack, attacker.defense]
@@ -37,7 +37,7 @@ export const calculatePower = (move: PokemonMove, pokemon: Pokemon, attacker?: P
   const attackerHp = adjustHpToLevel(attacker.hp, LEVEL)
 
   const base = Math.floor(Math.floor(Math.floor(2 * LEVEL / 5 + 2) * move.power * attack / defense) / 50) + 2
-  const damage = Math.floor(base * move.stab * typeEfectiveness)
+  const damage = Math.floor(base * move.stab * typeEffectiveness)
 
   const minDamage = percentageDamageOfLife(damage, attackerHp) * MIN_ATK_MULTIPLIER
   const maxDamage = percentageDamageOfLife(damage, attackerHp) * MAX_ATK_MULTIPLIER

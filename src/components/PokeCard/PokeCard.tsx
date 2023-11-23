@@ -6,7 +6,7 @@ import useAttacker from 'hooks/useAttacker'
 import Spinner from 'components/Spinner/Spinner'
 import PokemonMoves from 'components/PokemonMoves/PokemonMoves'
 import { getTypeTip } from 'utils/tooltip'
-import { getStength } from 'utils/pokemon'
+import { getStrength } from 'utils/pokemon'
 
 interface PokeCardProps extends Omit<CardContainerProps, 'children' | 'className'> {
   open?: boolean
@@ -20,7 +20,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
 
   useEffect(() => {
     const tooltips = pokemon.types.map(type => {
-      const from = getStength(attacker, type)
+      const from = getStrength(attacker, type)
       return getTypeTip(type, attacker, from)
     })
 
@@ -39,7 +39,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
           <h1>{pokemon.name}</h1>
           <div className={styles.types}>
             {pokemon.types.map((type, id) => {
-              const from = getStength(attacker, type)
+              const from = getStrength(attacker, type)
 
               return (
                 <TypeBadge tooltip={typesTooltip[id]} key={id} type={type} weak={{ from }} big={open} />

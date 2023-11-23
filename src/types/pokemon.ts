@@ -1,6 +1,6 @@
 import { PokemonType, pokemonTypes } from 'types/pokemonTypes'
-import { initialWeaknewssByTpe, weaknessByType } from './types'
-import { PokemonAbilitie } from './abilities'
+import { initialWeaknessByTpe, weaknessByType } from './types'
+import { PokemonAbility } from './abilities'
 import { pokemonTypesNames } from './pokemonTypes'
 import { PokemonMove } from './moves'
 
@@ -16,7 +16,7 @@ interface APISprites {
   }
 }
 
-interface APIAbilitie {ability: { name: string, url: string }}
+interface APIAbility {ability: { name: string, url: string }}
 
 export interface APIType { slot: number, type: { name: pokemonTypesNames, url: string } }
 
@@ -26,7 +26,7 @@ export interface PokemonAPI {
   name: string
   types: APIType[]
   order: number
-  abilities: APIAbilitie[]
+  abilities: APIAbility[]
   sprites: APISprites
   stats: APIStat[]
 }
@@ -43,7 +43,7 @@ export interface Pokemon {
   specialAttack: number
   defense: number
   specialDefense: number
-  abilities: PokemonAbilitie[]
+  abilities: PokemonAbility[]
   weaknessByType: weaknessByType
   moves: PokemonMove[]
 }
@@ -75,7 +75,7 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
     specialDefense: getStat(stats, 'special-defense'),
     sprite: getSprites(sprites),
     abilities: [],
-    weaknessByType: structuredClone(initialWeaknewssByTpe),
+    weaknessByType: structuredClone(initialWeaknessByTpe),
     moves: []
   }
 }
