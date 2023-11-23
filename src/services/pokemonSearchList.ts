@@ -2,18 +2,14 @@ import { getPokemons, setPokemons } from 'data/pokemons'
 import { searchItemAPI } from 'types/searchItem'
 import { POKE_API } from '../consts'
 
-export const pokemonSearchList = async (): Promise<searchItemAPI[]> => {
+export const pokemonSearchList = async ({ signal }: AbortController): Promise<searchItemAPI[]> => {
   const currentPokemons = getPokemons()
 
-  return await new Promise((resolve, reject) => {
-    if (currentPokemons != null) return resolve(currentPokemons)
+  if (currentPokemons != null) return currentPokemons
 
-    fetch(`${POKE_API}pokemon-species/?limit=2000`)
-      .then(async data => await data.json())
-      .then(({ results }) => {
-        setPokemons(results)
-        resolve(results)
-      })
-      .catch(reject)
-  })
+  const apiData = await fetch(`${POKE_API}pokemon-species/?limit=2000`, { signal })
+  const { results } = await apiData.json()
+
+  setPokemons(results)
+  return results
 }

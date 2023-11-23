@@ -2,19 +2,14 @@ import { searchItemAPI, sanitizeItem } from 'types/searchItem'
 import { POKE_API } from '../consts'
 import { getMoveList, setMoveList } from 'data/movesList'
 
-export const moveSearchList = async (): Promise<searchItemAPI[]> => {
+export const moveSearchList = async ({ signal }: AbortController): Promise<searchItemAPI[]> => {
   const currentMoves = getMoveList()
+  if (currentMoves != null) return currentMoves
 
-  return await new Promise((resolve, reject) => {
-    if (currentMoves != null) return resolve(currentMoves)
+  const apiData = await fetch(`${POKE_API}move?limit=2000&lang=es`, { signal })
+  const { results } = await apiData.json()
+  const parsedMoves: searchItemAPI[] = results.map(sanitizeItem)
 
-    fetch(`${POKE_API}move?limit=2000&lang=es`)
-      .then(async data => await data.json())
-      .then(({ results }) => results.map(sanitizeItem))
-      .then((results: searchItemAPI[]) => {
-        setMoveList(results)
-        resolve(results)
-      })
-      .catch(reject)
-  })
+  setMoveList(parsedMoves)
+  return parsedMoves
 }

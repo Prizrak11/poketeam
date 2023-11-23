@@ -12,34 +12,37 @@ export interface useSearchReturn {
 }
 
 interface useSearchProps {
-  getter: () => Promise<searchItemAPI[]>
+  getter: (signal: AbortController) => Promise<searchItemAPI[]>
   filter: (arr: searchItemAPI[], query: string) => searchItemAPI[]
 }
 
-const useSearch = ({ getter, filter }: useSearchProps): useSearchReturn => {
+const useSearch = ({ getter, filter }: useSearchProps) => (): useSearchReturn => {
   const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState<searchItemAPI[]>()
   const [inputValue, setInputValue] = useState<string>('')
   const [list, setList] = useState<searchItemAPI[]>()
 
-  const getListFromApi = (): void => {
-    setIsLoading(true)
-    getter()
-      .then(setSearch)
-      .finally(() => setIsLoading(false))
-  }
-
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>): void => { setInputValue(evt.target.value) }
 
   const clearInput = (): void => setInputValue('')
 
+  const getListFromApi = (controller: AbortController): void => {
+    setIsLoading(true)
+    getter(controller)
+      .then(setSearch)
+      .finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    const controller = new AbortController()
+    getListFromApi(controller)
+
+    return () => controller.abort()
+  }, [])
+
   useEffect(() => {
     debounceHandleChange(inputValue)
   }, [inputValue])
-
-  useEffect(() => {
-    getListFromApi()
-  }, [])
 
   const handleChange = (query: string): void => {
     if (search == null) return
