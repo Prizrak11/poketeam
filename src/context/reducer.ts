@@ -57,10 +57,10 @@ export const reducer = (state: AppState, action: ActionType): AppState => {
     case Actions.CHANGE_POKEMON_MOVES:
       return {
         ...state,
-        pokemonTeam: [
-          ...state.pokemonTeam.filter(({ id }) => id !== payload.pokemon.id),
-          { ...payload.pokemon, moves: payload.moves }
-        ]
+        pokemonTeam: state.pokemonTeam.map(pokemon => {
+          if (pokemon.id !== payload.pokemon.id) return pokemon
+          return { ...pokemon, moves: payload.moves }
+        })
       }
     case Actions.HANDLE_SEARCH_MODAL:
       return { ...state, searchModal: payload }
