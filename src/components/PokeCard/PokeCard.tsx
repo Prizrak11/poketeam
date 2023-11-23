@@ -25,7 +25,7 @@ const PokeCard: FC<PokeCardProps> = (props): JSX.Element => {
     })
 
     setTypesTooltip(tooltips)
-  }, [attacker, open])
+  }, [attacker, open, pokemon.types])
 
   const typeColor = pokemon.types[0].color
 
