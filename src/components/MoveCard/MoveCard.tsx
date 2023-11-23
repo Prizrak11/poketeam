@@ -24,7 +24,7 @@ const MoveCard: FC<MoveCardProps> = ({ move, open = false, power, remove }): JSX
   const weak = getWeak(attacker, move.type)
 
   const sectionClass = `
-    ${styles.container} 
+    ${styles.container}
     ${open ? styles.open : ''}
     ${String(weak * move.stab).length > 1 ? styles.weak : ''}
     `
