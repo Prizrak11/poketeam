@@ -41,7 +41,7 @@ const PokeTeam: FC = (): JSX.Element => {
     <div>
       <h1 className={styles.title}>Your Team</h1>
       <ResponsiveMasonry columnsCountBreakPoints={{ 1050: 1, 1300: 2 }}>
-        <Masonry>
+        <Masonry className={styles.masonry}>
           {
           pokemonTeam.map((pokemon, id) => {
             if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />

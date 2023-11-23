@@ -4,3 +4,9 @@
 .title {
   @mixin title;
 }
+
+.masonry {
+  & > :nth-child(even) {
+    margin-top: 2rem;
+  }
+}
