@@ -4,7 +4,7 @@ import Spinner from 'components/Spinner/Spinner'
 import useAttacker from 'hooks/useAttacker'
 import { usePokemonSearchModal } from 'hooks/modals'
 import { FC } from 'react'
-import styles from './Atacker.module.css'
+import styles from './Attacker.module.css'
 import { MenuItem } from 'components/Tooltip/TooltipMenu'
 
 const Attacker: FC = (): JSX.Element => {
