@@ -5,13 +5,13 @@ import styles from './PokeTeam.module.css'
 import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import { usePokemonSearchModal } from 'hooks/modals'
-import 'masonry-rows'
 import useMoveSearchModal from 'hooks/modals/useMoveSearchModal'
 import useMove from 'hooks/useMove'
 import { searchItemAPI } from 'types/searchItem'
 import { MenuItem } from 'components/Tooltip/TooltipMenu'
 import { FaTrash } from 'react-icons/fa'
 import { AiOutlineAppstoreAdd, AiOutlineEdit } from 'react-icons/ai'
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
 
 const PokeTeam: FC = (): JSX.Element => {
   const { pokemonTeam, loading, addPokemonToTeamFromApi, removePokemonFromTeam } = usePokemon()
@@ -40,8 +40,9 @@ const PokeTeam: FC = (): JSX.Element => {
   return (
     <div>
       <h1 className={styles.title}>Your Team</h1>
-      <masonry-rows gap='1rem'>
-        {
+      <ResponsiveMasonry columnsCountBreakPoints={{ 1050: 1, 1300: 2 }}>
+        <Masonry>
+          {
           pokemonTeam.map((pokemon, id) => {
             if (pokemon === undefined) return <VoidCard key={id} action={openModalToTeam} />
 
@@ -63,7 +64,8 @@ const PokeTeam: FC = (): JSX.Element => {
             )
           })
         }
-      </masonry-rows>
+        </Masonry>
+      </ResponsiveMasonry>
     </div>
   )
 }

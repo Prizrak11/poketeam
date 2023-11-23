@@ -6,7 +6,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-bottom: 0.3rem;
-  gap: 1rem;
+  min-height: 4em;
+  gap: 0.5em;
   flex-direction: column;
 
   &.open {
