@@ -1,18 +1,7 @@
-import { searchFuncType } from 'hooks/modals/useSearchModal'
 import { Pokemon } from 'types/pokemon'
-
-export enum ModalsTypes {
-  pokemonSearch = 'search-for-specific-pokemon',
-  moveSearch = 'search-for-specific-move'
-}
-
-export type Modals = {
-  [T in ModalsTypes]: boolean
-}
 
 export interface AppState {
   pokemonTeam: Pokemon[]
-  searchModal: { state: Modals, action?: searchFuncType }
   attacker?: Pokemon
 }
 
@@ -20,14 +9,12 @@ export enum Actions {
   SET_POKEMON = 'set-pokemon',
   CHANGE_POKEMON_TEAM = 'change-pokemon-team',
   SET_ATTACKER = 'set-attacker',
-  HANDLE_SEARCH_MODAL = 'handle-search-modal',
   SET_POKEMON_MOVE = 'set-pokemon-move',
   CHANGE_POKEMON_MOVES = 'change-pokemon-moves'
 }
 
 export const initialState: AppState = {
   pokemonTeam: [],
-  searchModal: { state: { [ModalsTypes.pokemonSearch]: false, [ModalsTypes.moveSearch]: false } },
   attacker: undefined
 }
 
@@ -62,8 +49,6 @@ export const reducer = (state: AppState, action: ActionType): AppState => {
           return { ...pokemon, moves: payload.moves }
         })
       }
-    case Actions.HANDLE_SEARCH_MODAL:
-      return { ...state, searchModal: payload }
     default: return state
   }
 }

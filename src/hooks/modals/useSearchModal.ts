@@ -1,7 +1,6 @@
-import { ModalsTypes } from '../../context/reducer'
-import { Actions } from 'context/reducer'
-import { useAppContext } from 'context/AppContext'
 import { searchItemAPI } from 'types/searchItem'
+import { ModalActions, mapActionsToState } from 'context/modals/modalsReducer'
+import { useModalContext } from 'context/modals/ModalContext'
 
 export type searchFuncType = (query: searchItemAPI) => void
 
@@ -13,22 +12,23 @@ export interface useSearchModalReturn {
 }
 
 interface useSearchProps {
-  type: ModalsTypes
+  type: ModalActions
 }
 
 const useSearchModal = ({ type }: useSearchProps): useSearchModalReturn => {
-  const { state: { searchModal }, dispatch } = useAppContext()
+  const { state, dispatch } = useModalContext()
+  const searchModal = state[mapActionsToState[type]]
 
-  const isOpen = searchModal.state[type]
+  const isOpen = searchModal.state
 
   const searchAction = (searchModal.action != null) ? searchModal.action : function () {}
 
   const openModal = (action?: searchFuncType): void => {
-    dispatch({ type: Actions.HANDLE_SEARCH_MODAL, payload: { state: { [type]: true }, action } })
+    dispatch({ type, payload: { state: true, action } })
   }
 
   const closeModal = (): void => {
-    dispatch({ type: Actions.HANDLE_SEARCH_MODAL, payload: { state: { [type]: false } } })
+    dispatch({ type, payload: { state: false } })
   }
 
   return {

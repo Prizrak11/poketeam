@@ -2,11 +2,11 @@ import { FC, MouseEvent } from 'react'
 import SearchInput from 'components/SearchInput/SearchInput'
 import useSearchModal, { searchFuncType } from 'hooks/modals/useSearchModal'
 import styles from './SearchModal.module.css'
-import { ModalsTypes } from 'context/reducer'
 import { useSearchReturn } from 'hooks/search/useSearch'
+import { ModalActions } from 'context/modals/modalsReducer'
 
 interface searchModalProps {
-  type: ModalsTypes
+  type: ModalActions
   placeholder: string
   children: JSX.Element
   searchHook: () => useSearchReturn
@@ -17,9 +17,9 @@ const SearchModal: FC<searchModalProps> = ({ type, placeholder, searchHook, chil
 
   const stopClose = (evt: MouseEvent): void => evt.stopPropagation()
 
-  const onSearch: searchFuncType = pokemon => {
+  const onSearch: searchFuncType = item => {
     closeModal()
-    searchAction(pokemon)
+    searchAction(item)
   }
 
   if (!isOpen) return <></>
