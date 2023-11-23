@@ -39,7 +39,7 @@ const TooltipMenu: FC<Props> = ({ menu, className }): JSX.Element => {
                 key={id}
                 className={`${styles.option} ${error ? styles.error : ''}`}
               >
-                <button onClick={handler}>{Icon != null && Icon}{label}</button>
+                <button onClick={handler} aria-expanded='false'>{Icon != null && Icon}{label}</button>
               </li>
             )
           })
