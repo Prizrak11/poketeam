@@ -56,7 +56,7 @@ const AttackerCard: FC<AttackerCardProps> = (props): JSX.Element => {
   if (pokemon == null) return <Spinner />
   return (
     <div ref={r => { attackerRef.current = r }}>
-      <PokeCardContainer {...props} menu={menu} className={`${styles.card} ${open ? styles.open : ''}`}>
+      <PokeCardContainer {...props} menu={menu} className={`${styles.card} ${open ? styles.open : ''} ${styles.attacker}`}>
         <>
           <p className={styles.number} style={{ color: typeColor }}>{pokemon.number}</p>
           <img src={pokemon.sprite} className={styles.sprite} />

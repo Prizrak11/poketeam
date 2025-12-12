@@ -37,6 +37,7 @@ export interface Pokemon {
   types: PokemonType[]
   number: number
   sprite: string
+  miniSprite: string
   speed: number
   hp: number
   attack: number
@@ -54,6 +55,13 @@ const getSprites = (sprites: APISprites): string => {
   return other.home.front_default ??
     versions['generation-v']['black-white'].animated.front_default ??
     frontDefault
+}
+
+const getMiniSprite = (sprites: APISprites): string => {
+  const { other, versions, front_default: frontDefault } = sprites
+
+  return frontDefault ?? versions['generation-v']['black-white'].animated.front_default ??
+  other.home.front_default
 }
 
 const getStat = (stats: APIStat[], name: string): number =>
@@ -74,6 +82,7 @@ export const transformApiToPokemon = (pokemon: PokemonAPI): Pokemon => {
     defense: getStat(stats, 'defense'),
     specialDefense: getStat(stats, 'special-defense'),
     sprite: getSprites(sprites),
+    miniSprite: getMiniSprite(sprites),
     abilities: [],
     weaknessByType: structuredClone(initialWeaknessByTpe),
     moves: []

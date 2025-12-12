@@ -8,6 +8,7 @@ import useAttacker from 'hooks/useAttacker'
 import { calculatePower } from 'utils/pokemonMoves'
 import { PokemonMove } from 'types/moves'
 import AttackerMoveCard from 'components/MoveCard/AttackerMoveCard'
+import Spinner from 'components/Spinner/Spinner'
 
 interface PokemonAttacketMovesProps {
   pokemon: Pokemon
@@ -31,6 +32,7 @@ const PokemonAttackerMoves: FC<PokemonAttacketMovesProps> = ({ pokemon, open = f
 
   const openAndAddMove = (): void => openModal(addMove)
 
+  if (attacker == null) return <Spinner />
   return (
     <section className={`${styles.container} ${styles.open}`}>
       <>
@@ -42,6 +44,7 @@ const PokemonAttackerMoves: FC<PokemonAttacketMovesProps> = ({ pokemon, open = f
               open={open}
               power={calculatePower(move, pokemon, attacker)}
               remove={editable ? remove : undefined}
+              attacker={attacker}
             />
           ))
         }

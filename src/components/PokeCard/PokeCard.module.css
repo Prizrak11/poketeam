@@ -169,3 +169,21 @@
     row-gap: 1rem;
   }
 }
+
+.attacker {
+  padding-bottom: 3em;
+  padding-inline: 5em;
+
+
+  .number {
+    margin-left: 1em;
+  }
+
+  .sprite {
+    margin-left: 0.5rem;
+    width: 90%;
+    margin-top: -10%;
+    object-fit: contain;
+    z-index: 10;
+  }
+}
