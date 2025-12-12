@@ -11,10 +11,12 @@ interface IUseMove {
   loading: boolean
   addMoveToPokemon: (move: searchItemAPI, pokemon: Pokemon) => void
   removeMoveFromPokemon: (move: PokemonMove, pokemon: Pokemon) => void
+  addMoveToAttacker: (move: searchItemAPI) => void
+  removeMoveFromAttacker: (move: PokemonMove) => void
 }
 
 const useMove = (): IUseMove => {
-  const { state: { pokemonTeam }, dispatch } = useAppContext()
+  const { state: { pokemonTeam, attacker }, dispatch } = useAppContext()
   const [loading, setLoading] = useState(false)
 
   const getMoveFromApi = async (move: searchItemAPI): Promise<PokemonMove> => {
@@ -42,9 +44,27 @@ const useMove = (): IUseMove => {
     dispatch({ type: Actions.CHANGE_POKEMON_MOVES, payload: { pokemon, moves: filtered } })
   }
 
+  const addMoveToAttacker = (move: searchItemAPI): void => {
+    if (attacker == null) throw new Error('There is no attacker defined')
+
+    getMoveFromApi(move)
+      .then(move => dispatch({ type: Actions.SET_ATTACKER_MOVE, payload: { move: addStab(move, attacker) } }))
+      .catch((error: Error) => { throw new Error(`Failed to load move to ${attacker.name}: ${error.message}`) })
+  }
+
+  const removeMoveFromAttacker = (move: PokemonMove): void => {
+    if (attacker == null) throw new Error('There is no attacker defined')
+
+    const filtered = attacker.moves.filter(({ name }) => name !== move.name)
+
+    dispatch({ type: Actions.CHANGE_ATTACKER_MOVES, payload: { moves: filtered } })
+  }
+
   return {
     addMoveToPokemon,
     removeMoveFromPokemon,
+    addMoveToAttacker,
+    removeMoveFromAttacker,
     loading
   }
 }

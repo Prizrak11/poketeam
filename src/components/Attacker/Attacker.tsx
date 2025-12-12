@@ -1,21 +1,22 @@
-import FullPokeCard from 'components/PokeCard/FullCard'
 import VoidCard from 'components/PokeCard/VoidCard'
 import Spinner from 'components/Spinner/Spinner'
 import useAttacker from 'hooks/useAttacker'
 import { usePokemonSearchModal } from 'hooks/modals'
 import { FC } from 'react'
 import styles from './Attacker.module.css'
-import { MenuItem } from 'components/Tooltip/TooltipMenu'
+import { CardContainerProps } from 'components/PokeCard/PokeCardContainer'
+import AttackerCard from 'components/PokeCard/AttackerCard'
 
-const Attacker: FC = (): JSX.Element => {
-  const { loading, attacker, addPokemonToEnemyFromApi, removePokemonEnemy } = useAttacker()
+interface AttackerProps extends Omit<CardContainerProps, 'children' | 'className'> {
+  open?: boolean
+}
+
+const Attacker: FC<AttackerProps> = (props): JSX.Element => {
+  const { open } = props
+  const { loading, attacker, addPokemonToEnemyFromApi } = useAttacker()
   const { openModal } = usePokemonSearchModal()
 
   const openModalToAttacker = (): void => openModal(addPokemonToEnemyFromApi)
-
-  const menu: MenuItem[] = [
-    { label: 'Remove', action: removePokemonEnemy, error: true }
-  ]
 
   if (loading) return <Spinner />
   return (
@@ -24,7 +25,7 @@ const Attacker: FC = (): JSX.Element => {
       <section>
         {
           (attacker != null)
-            ? <FullPokeCard pokemon={attacker} menu={menu} />
+            ? <AttackerCard pokemon={attacker} open={open} />
             : <VoidCard action={openModalToAttacker} />
         }
       </section>
