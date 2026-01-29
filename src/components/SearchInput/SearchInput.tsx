@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useState, useRef, forwardRef, useImperativeHandle, useEffect } from 'react'
+import { useState, useRef, forwardRef, useImperativeHandle, useEffect, useCallback, KeyboardEventHandler } from 'react'
 import styles from './SearchInput.module.css'
 import Spinner from 'components/Spinner/Spinner'
 import { useSearchReturn } from 'hooks/search/useSearch'
@@ -35,20 +35,57 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
     clearInput()
   }
 
+  const focusClose = (): void => {
+    const closeButton = document.querySelector('[data-close-modal]') as HTMLElement
+    closeButton?.focus()
+  }
+
   useEffect(() => {
     setKeyFocus(0)
     scrollToRef(0)
   }, [list])
 
-  const handleArrows: KeyboardEventHandler<HTMLInputElement> = evt => {
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback((evt) => {
     if (list == null) return
 
-    if (evt.key === 'ArrowUp' && keyFocus > 0) setKeyFocus(key => key - 1)
-    if (evt.key === 'ArrowDown' && keyFocus < list.length - 1) setKeyFocus(key => key + 1)
-    if (evt.key === 'Enter') clickOption(list[keyFocus])
+    if (evt.key === 'Tab' && evt.shiftKey && keyFocus === 0) {
+      evt.preventDefault()
+      focusClose()
+      return
+    }
 
-    if (keyFocus !== 0) scrollToRef(keyFocus - 1)
-  }
+    if (evt.key === 'Tab' && !evt.shiftKey && keyFocus === list.length - 1) {
+      evt.preventDefault()
+      return
+    }
+
+    if (evt.key === 'ArrowUp' || (evt.key === 'Tab' && evt.shiftKey)) {
+      evt.preventDefault()
+      setKeyFocus(key => {
+        const newKey = key > 0 ? key - 1 : 0
+        scrollToRef(newKey)
+        return newKey
+      })
+      return
+    }
+
+    if (evt.key === 'ArrowDown' || evt.key === 'Tab') {
+      evt.preventDefault()
+      setKeyFocus(key => {
+        const newKey = key < list.length - 1 ? key + 1 : list.length - 1
+        scrollToRef(newKey)
+        return newKey
+      })
+      return
+    }
+
+    if (evt.key === 'Enter') {
+      evt.preventDefault()
+      if (list[keyFocus] != null) {
+        clickOption(list[keyFocus])
+      }
+    }
+  }, [list, keyFocus])
 
   useImperativeHandle(forwardedRef, () => ({ clearInput }))
 
@@ -62,9 +99,12 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
         placeholder={placeholder}
         className={styles.input}
         autoFocus
-        onKeyUp={handleArrows}
+        aria-autocomplete='list'
+        aria-expanded={list != null && list.length > 0}
+        aria-controls='search-suggestions'
+        onKeyDown={handleKeyDown}
       />
-      <div className={styles.suggestions}>
+      <div className={styles.suggestions} role='listbox' id='search-suggestions' tabIndex={-1}>
         {
           list?.map((option, id) => {
             const focus = keyFocus === id
@@ -72,11 +112,14 @@ const SearchInput = forwardRef<SearchInputElement, searchInputProps>(({
 
             return (
               <button
+                role='option'
+                aria-selected={focus}
                 onMouseOver={() => setKeyFocus(id)}
                 ref={ref => { buttonArr.current[id] = ref }}
                 key={id}
                 className={fStyles}
                 onClick={() => clickOption(option)}
+                tabIndex={-1}
               >{option.name}
               </button>
             )

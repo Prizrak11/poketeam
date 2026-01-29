@@ -9,14 +9,15 @@
     padding: 0.7rem 1rem;
     border: none;
     outline: none;
-    width: 150%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .suggestions {
     color: var(--background-color);
     background-color: white;
     max-height: 12rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
@@ -24,6 +25,8 @@
     width: 100%;
     border: 1px solid black;
     border-top: none;
+    left: 0;
+    outline: none;
 
     button {
       padding: 0.7rem 1rem;
@@ -32,6 +35,8 @@
       border: none;
       text-align: start;
       cursor: pointer;
+      outline: none;
+      color: var(--background-color);
 
       &:hover,
       &.focus {

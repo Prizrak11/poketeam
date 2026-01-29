@@ -32,31 +32,13 @@ const SearchModal: FC<searchModalProps> = ({ type, placeholder, searchHook, chil
       }
     }
 
-    const handleTabKey = (evt: KeyboardEvent): void => {
-      if (evt.key === 'Tab' && (contentRef.current != null)) {
-        const focusableElements = contentRef.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
-        const firstElement = focusableElements[0] as HTMLElement
-        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
-
-        if (document.activeElement === firstElement && evt.shiftKey) {
-          lastElement.focus()
-          evt.preventDefault()
-        } else if (document.activeElement === lastElement && !evt.shiftKey) {
-          firstElement.focus()
-          evt.preventDefault()
-        }
-      }
-    }
-
     if (isOpen) {
       previouslyFocusedElement.current = document.activeElement as HTMLElement
       document.addEventListener('keydown', handleEscape)
-      document.addEventListener('keydown', handleTabKey)
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.removeEventListener('keydown', handleTabKey)
       if (previouslyFocusedElement.current != null) {
         previouslyFocusedElement.current.focus()
       }
@@ -68,7 +50,7 @@ const SearchModal: FC<searchModalProps> = ({ type, placeholder, searchHook, chil
     <div className={styles.modal} onClick={closeModal} role='dialog' aria-modal='true' aria-label='Search Modal'>
       <div className={styles.content} onClick={stopClose} ref={contentRef}>
         <div className={styles.background} />
-        <button className={styles.closeButton} onClick={closeModal} aria-label='Close modal'>
+        <button className={styles.closeButton} onClick={closeModal} aria-label='Close modal' data-close-modal>
           <AiOutlineClose />
         </button>
         {children}
