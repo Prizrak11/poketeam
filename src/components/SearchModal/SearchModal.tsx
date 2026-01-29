@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react'
+import { FC, MouseEvent, useEffect } from 'react'
 import SearchInput from 'components/SearchInput/SearchInput'
 import useSearchModal, { searchFuncType } from 'hooks/modals/useSearchModal'
 import styles from './SearchModal.module.css'
@@ -21,6 +21,22 @@ const SearchModal: FC<searchModalProps> = ({ type, placeholder, searchHook, chil
     closeModal()
     searchAction(item)
   }
+
+  useEffect(() => {
+    const handleEscape = (evt: KeyboardEvent): void => {
+      if (evt.key === 'Escape') {
+        closeModal()
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isOpen, closeModal])
 
   if (!isOpen) return <></>
   return (
