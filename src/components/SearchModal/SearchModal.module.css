@@ -33,6 +33,37 @@
       clip-path: var(--pixel-corners-md);
     }
 
+    .closeButton {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      background: rgba(0, 0, 0, 0.1);
+      border: none;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: grid;
+      place-content: center;
+      cursor: pointer;
+      color: var(--dark-grey);
+      z-index: 10;
+      transition: background-color 0.2s, transform 0.2s;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+
     .icon {
       font-size: 5rem;
       align-self: center;
